@@ -31,15 +31,7 @@
   @endif
 
 </div>
-<div class="container-fluid">
 
-  @if(session('msg'))
-  <div class="row success-message"">
-    <p class=" msg">{{session('msg')}}</p>
-  </div>
-  @endif
-
-</div>
 <div class="container-fluid">
   <div class="card w-100 h-100">
     <div class="card-header">
@@ -88,7 +80,7 @@
             @else
             <div class="table-responsive">
               <table class="table table-bordered table-striped">
-                <thead>
+                <thead class="table-dark">
                   <tr>
                     <th>ID</th>
                     <th>Nome</th>
@@ -106,9 +98,29 @@
                     <td setTimeout(function() { document.getElementById('success-message').style.display='none' ; },
                       3000);>{{ $student->nome }}</td>
                     <td>{{ $student->email }}</td>
-                    <td>{{ $student->endereco }}</td>
+                    <td>{{ $student->avenida }}</td>
                     <td>{{ $student->ntelefone }}</td>
-                    <td>{{ $student->tipodoc}}: {{$student->numerodoc}}</td>
+                    @if ($student->tipodoc == "bi")
+
+                    <td>
+                      BI:
+                      {{$student->numerodoc}}
+                    </td>
+
+                    @elseif($student->tipodoc == "cedula")
+                    <td>
+                      Cedula:
+                      {{$student->numerodoc}}
+
+                    </td>
+                    @else
+                    <td>
+                      Cartão de eleitor:
+                      {{$student->numerodoc}}
+
+                    </td>
+                    @endif
+
                     <td>
                       <a href="{{ route('student.show', $student->id) }}">Ver</a>
                       <a href="{{ route('student.edit', $student->id) }}">Edit</a>
@@ -116,7 +128,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                          onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
+                          onclick="return confirm('Tens certeza que queres apagar esse estudante?')">Delete</button>
                       </form>
                     </td>
 

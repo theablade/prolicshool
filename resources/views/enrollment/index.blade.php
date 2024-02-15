@@ -43,7 +43,7 @@
 <div class="container-fluid">
   <div class="card w-100 h-100">
     <div class="card-header">
-      <h3 class="card-title">Lista de Matriculas</h3>
+      <h3 class="card-title">Lista de Inscrições</h3>
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="remove">
           <i class="fas fa-times"></i>
@@ -89,7 +89,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Curso</th>
-                    <th>Matricula</th>
+                    <th>Mensalidade</th>
                     <th>Inscrição</th>
                     <th>Status</th>
                     <th>Actions</th>

@@ -37,9 +37,23 @@ class StudentController extends Controller
  
     public function store(studentFormRequest $request)
     {
-        
+       $student = new Student;
 
-    $student = Student::create($request->all());
+    
+    if ($request->hasFile('img')) {
+    
+        $path = $request->file('img')->store('public/images');
+
+      
+        $student->img_path = $path;
+    }
+
+    $student->fill($request->all());
+
+   
+    $student->save();
+
+ 
     return redirect()->route("student.index")->with("msg", "Estudante salvo com sucesso");
     }
 
@@ -55,15 +69,28 @@ class StudentController extends Controller
 
     public function edit($id)
     {
+        $provinces = Province::all();
+        $districts = District::all();
         $student = Student::findOrFail($id);
-        return view("student.edit", compact('student'));
+        return view("student.edit", compact('student','provinces', 'districts'));
     }
 
     
     public function update(Request $request, $id)
     {
-       $student = Student::findOrFail($id);
-        $student->update($request->all());
+         $student = Student::findOrFail($id);
+
+
+    if ($request->hasFile('img')) {
+    
+        $path = $request->file('img')->store('public/images');
+        $student->img_path = $path;
+    }
+
+    $student->update($request->except('img'));
+
+    
+
         return redirect()->route("student.index")
                          ->with("msg","Estudante atualizado com sucesso");
     }

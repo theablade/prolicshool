@@ -325,7 +325,7 @@ return [
                 ],
                 
                 [
-                    'text' => 'Alunos',
+                    'text' => 'Estudante',
                     'url'  => 'student',
                     'icon'    => 'fas fa-book-reader',
                      'active'  => ['student', 'student*', 'regex:@^content/[0-9]+$@']
@@ -371,18 +371,12 @@ return [
             'icon'    => 'fas fa-chart-line',
             'submenu' => [
                 [
-                    'text' => 'Matricula',
+                    'text' => 'Inscricao',
                     'url'  => 'enrollment',
                     'icon'    => 'fas fa-registered', 
                     'active'  => ['enrollment', 'enrollment*', 'regex:@^content/[0-9]+$@']                        
                 ],
                 
-                [
-                    'text' => 'Inscricao',
-                    'url'  => 'inscricao',
-                    'icon'    => 'fas fa-fw fa-pen',
-                 'active'  => ['inscricao', 'inscricao*', 'regex:@^content/[0-9]+$@']
-                ],
                 [
                     'text' => 'Mensalidade',
                     'url'  => 'monthlypayment',

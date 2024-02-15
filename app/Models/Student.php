@@ -12,7 +12,6 @@ class Student extends Model
       public $timestamps = false;
      protected $fillable = [
         'nome',
-        'endereco',
         'ntelefone',
         'genero',
         'data_nascimento',
@@ -21,9 +20,17 @@ class Student extends Model
         'nacionalidade',
         'tipodoc',
         'numerodoc',
-        'data_emissao',
+        'data_emisao',
         'data_validade',
         'email',
         'img',
+        'dadname',
+        'mothername',
+         'bairro',
+         'quarterao',
+         'avenida',
+         'horario',
+         'resprovincia',
+         'redistrito'
      ];
 }

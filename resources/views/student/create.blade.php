@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Student')
+@section('title', 'Estudante')
 
 @section('content_header')
 @stop
@@ -13,6 +13,21 @@
     width: 150px;
     height: 150px;
     display: inline-block;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ccc;
+  }
+
+  .input-img-preview {
+    width: 150px;
+    height: 150px;
+    display: inline-flex;
+    /* Alteração */
+    justify-content: center;
+    /* Adição */
+    align-items: center;
+    /* Adição */
     overflow: hidden;
     border-radius: 50%;
     cursor: pointer;
@@ -39,7 +54,7 @@
   <!-- Adicione a classe mt-4 aqui -->
   <div class="card w-100 h-100">
     <div class="card-header">
-      <h3 class="card-title">Cadastrar novo estudante</h3>
+      <h3 class="card-title">Inscrever um aluno</h3>
       <div class="card-tools">
         <!-- Botão Fechar -->
         <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -59,26 +74,27 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-12">
-          <form role="form" method="POST" action="{{ route('student.store') }}">
+          <form role="form" method="POST" action="{{ route('student.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="img">Imagem</label>
-                    <div class="input-group">
+                    <div class="input-group text-center">
                       <input type="file" class="form-control" id="img" name="img" onchange="previewImage(event)"
                         required style="display: none;">
                       <label for="img" class="input-img-preview">
-                        <img id="imagePreview" src="#" alt="Preview"
+                        <img id="imagePreview" src="#" alt="Foto Aluno"
                           style="max-width: 100%; max-height: 200px; border-radius: 50%; object-fit: cover;">
                       </label>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-4">
+                  <h4 class="text-bold">Dados pessoais</h4>
                   <div class="form-group">
-                    <label for="nome">Nome</label>
+                    <label for="nome">Nome do aluno</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -87,28 +103,41 @@
                         placeholder="Digite o nome" required>
                     </div>
                   </div>
-                  <div class="input-group mb-3" bis_skin_checked="1">
-                    <div class="input-group-prepend" bis_skin_checked="1">
-                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  <div class="form-group">
+                    <label for="nome">Filho(a) de</label>
+                    <div class="input-group" bis_skin_checked="1">
+                      <div class="input-group-prepend" bis_skin_checked="1">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+
+                      </div>
+                      <input type="text" value="{{old('dadname')}}" class="form-control" id="dadname" name="dadname"
+                        placeholder="Digite o nome" required>
                     </div>
-                    <input type="email" value="{{old('email')}}" class="form-control" id="email" name="email"
-                      placeholder="Digite o e-mail" required>
                   </div>
-
-
+                  <div class="form-group">
+                    <label for="nome">E de</label>
+                    <div class="input-group mb-3" bis_skin_checked="1">
+                      <div class="input-group-prepend" bis_skin_checked="1">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" value="{{old('mothername')}}" class="form-control" id="mothername"
+                        name="mothername" placeholder="Digite o nome" required>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="genero">Gênero</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
-                        <select class="form-control select2" style="width: 100%;" name="genero" id="genero">
-                          <option value="" disabled selected>Selecione um gênero</option>
-                          <option {{ old('genero') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
-                          <option {{ old('genero') == 'Feminino' ? 'selected' : '' }}>Feminino</option>
-                        </select>
-                      </div>
 
+
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="genero" id="genero">
+                        <option value="" disabled selected>Selecione um gênero</option>
+                        <option {{ old('genero') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                        <option {{ old('genero') == 'Feminino' ? 'selected' : '' }}>Feminino</option>
+                      </select>
                     </div>
+
+
                   </div>
 
 
@@ -125,82 +154,91 @@
 
                   <div class="form-group">
                     <label for="tipodoc">Tipo de Documento:</label>
-                    <select class="form-control select2" style="width: 100%;" name="tipodoc" id="tipodoc"
-                      onchange="calculateExpiryDate(); checkExpiryDate(this.value)">
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="far fa-address-card"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="tipodoc" id="tipodoc"
+                        onchange="calculateExpiryDate(); checkExpiryDate(this.value)">
+                        <option value="" selected disabled>Selecione o tipo de documento</option>
+                        <option value="cedula" data-icon="fas fa-id-card">Cedula</option>
+                        <option value="cartão de eleitor" data-icon="far fa-address-card">Cartão de eleitor</option>
+                        <option value="bi" data-icon="far fa-id-card">BI</option>
+                      </select>
+                    </div>
 
-                      <option value="rg">RG</option>
-                      <option value="cpf">CPF</option>
-                      <option value="bi">BI</option>
-                    </select>
+
                   </div>
-                  <div class="form-group">
-                    <div id="message" style="color:red;"></div>
-                    <label for="data_emisao">Data de emissão:</label>
-                    <div class="input-group">
-                      <div class="input-group-append">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                      </div>
-                      <input type="date" class="form-control" id="data_emisao" name="data_emisao"
-                        onchange="calculateExpiryDate(); checkExpiryDate();" required>
 
+                  <div class="form-group">
+                    <label for="tipodoc">Numero documento:</label>
+                    <div class="input-group mb-3" bis_skin_checked="1">
+                      <div class="input-group-prepend" bis_skin_checked="1">
+                        <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                      </div>
+                      <input type="text" value="{{old('numerodoc')}}" class="form-control" id="numerodoc"
+                        name="numerodoc" placeholder="Digite o numero do documento" required>
+                    </div>
+
+
+                  </div>
+
+
+
+                  <div id="emissao">
+                    <div class="form-group">
+                      <div id="message" style="color:red;"></div>
+                      <label for="data_emisao">Data de emissão:</label>
+                      <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="date" class="form-control" id="data_emisao" name="data_emisao"
+                          onchange="calculateExpiryDate(); checkExpiryDate();">
+
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="data_validade">Data de validade:</label>
+                      <div class="input-group">
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="date" class="form-control" id="data_validade" name="data_validade"
+                          onchange="checkExpiryDate()">
+
+                      </div>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="data_validade">Data de validade:</label>
-                    <div class="input-group">
-                      <div class="input-group-append">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                      </div>
-                      <input type="date" class="form-control" id="data_validade" name="data_validade"
-                        onchange="checkExpiryDate()" required>
-
+                    <label for="provincia">Natural de </label>
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="far fa-flag"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="provincia" id="provinciaSelect">
+                        <option value="" disabled selected>Selecione a Província</option>
+                        @foreach ($provinces as $province)
+                        <option value="{{$province->nome}}">{{$province->nome}}</option>
+                        @endforeach
+                      </select>
                     </div>
-                  </div>
 
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="provincia">Província</label>
-                    <select class="form-control select2" style="width: 100%;" name="provincia" id="provinciaSelect">
-                      <option value="" disabled selected>Selecione a Província</option>
-                      @foreach ($provinces as $province)
-                      <option value="{{$province->province_id}}">{{$province->nome}}</option>
-                      @endforeach
-                    </select>
                   </div>
 
                   <div class="form-group">
                     <label for="distrito">Distrito</label>
-                    <select class="form-control select2" style="width: 100%;" name="distrito" id="distritoSelect">
-                      <option value="" disabled selected>Selecione o distrito</option>
-                      @foreach ($districts as $district)
-                      <option value="{{$district->province_id}}">{{$district->nome}}</option>
-                      @endforeach
-                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="far fa-flag"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="distrito" id="distritoSelect">
+                        <option value="" disabled selected>Selecione o distrito</option>
+                        @foreach ($districts as $district)
+                        <option value="{{$district->nome}}">{{$district->nome}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
                   </div>
 
-                  <div class="form-group">
-                    <label for="ntelefone">Número de telefone</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                      </div>
-                      <input type="number" class="form-control" value="{{old('ntelefone')}}" id="ntelefone"
-                        name="ntelefone" placeholder="+258 " required minlength="9">
-                    </div>
-                  </div>
 
-                  <div class="form-group">
-                    <label for="endereco">Endereço</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                      </div>
-                      <input type="text" value="{{old('endereco')}}" class="form-control" id="endereco" name="endereco"
-                        placeholder="Digite o endereço" required>
-                    </div>
-                  </div>
 
                   <div class="form-group">
                     <label for="nacionalidade">Nacionalidade</label>
@@ -212,8 +250,114 @@
                         name="nacionalidade" placeholder="Digite a nacionalidade" required>
                     </div>
                   </div>
+                </div>
+                <div class="col-md-4">
+                  <h4 class="text-bold"> Dados de residência </h4>
+                  <div class="form-group">
+                    <label for="bairro">Bairro</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                      </div>
+                      <input type="text" value="{{old('bairro')}}" class="form-control" id="bairro" name="bairro"
+                        placeholder="Digite o endereço" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="quarterao">Quarterão</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                      </div>
+                      <input type="text" value="{{old('quarterao')}}" class="form-control" id="quarterao"
+                        name="quarterao" placeholder="Digite o endereço" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="avenida">Avenida</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                      </div>
+                      <input type="text" value="{{old('avenida')}}" class="form-control" id="avenida" name="avenida"
+                        placeholder="Digite o endereço" required>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="provincia">Provincia </label>
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="far fa-flag"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="resprovincia"
+                        id="resprovinciaSelect">
+                        <option value="" disabled selected>Selecione a Província</option>
+                        @foreach ($provinces as $province)
+                        <option value="{{$province->nome}}">{{$province->nome}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+                    <label for="redistrito">Distrito</label>
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="far fa-flag"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="redistrito" id="distritoSelect">
+                        <option value="" disabled selected>Selecione o distrito</option>
+                        @foreach ($districts as $district)
+                        <option value="{{$district->nome}}">{{$district->nome}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
+                  </div>
+
+                  <div class="form-group">
+                    <label for="ntelefone">Contacto do encarregado</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="number" class="form-control" value="{{old('ntelefone')}}" id="ntelefone"
+                        name="ntelefone" placeholder="+258 " required minlength="9">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="email" class="form-control" value="{{old('email')}}" id="email" name="email"
+                        placeholder="estudandt@exemplo.com ">
+                    </div>
+                  </div>
+                  <hr>
+
+                  <h4 class="text-bold">Horários </h4>
+                  <div class="form-group">
+
+                    <label for="horario">Horário das Aulas:</label>
+                    <div class="input-group-append">
+                      <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                      <select class="form-control" name="horario" id="horario">
+                        <option value="" selected disabled>Selecione o horário das aulas</option>
+                        <option value="07:00-08:30">07:00 - 08:30</option>
+                        <option value="08:30-10:00">08:30 - 10:00</option>
+                        <option value="10:00-11:30">10:00 - 11:30</option>
+                        <option value="12:30-14:00">12:30 - 14:00</option>
+                        <option value="14:00-15:30">14:00 - 15:30</option>
+                        <option value="15:30-17:00">15:30 - 17:00</option>
+                      </select>
+                    </div>
+
+                  </div>
 
                 </div>
+
+
               </div>
             </div>
 
@@ -257,13 +401,17 @@
 
   var calculatedTypeDocument;
 
+  var emissao = document.getElementById('emissao');
+  emissao.style.display = 'none'
+
   function calculateExpiryDate() {
     var typeDocument = document.getElementById('tipodoc').value;
     var emissionDateInput = document.getElementById('data_emisao');
     var expiryDateInput = document.getElementById('data_validade');
+    var emissao = document.getElementById('emissao');
     var expiryMessage = document.getElementById('message');
-
     if (typeDocument === 'bi') {
+      emissao.style.display = 'block';
       var emissionDate = new Date(emissionDateInput.value);
       var expiryDate = new Date(emissionDate);
 
@@ -274,6 +422,9 @@
       var formattedExpiryDate = expiryDate.toISOString().split('T')[0];
       expiryDateInput.value = formattedExpiryDate;
       calculatedTypeDocument = typeDocument;
+    } else if (typeDocument === 'cedula') {
+      expiryMessage.innerHTML = "";
+      emissao.style.display = 'none';
     }
   }
 

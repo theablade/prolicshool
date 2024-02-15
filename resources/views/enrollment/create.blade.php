@@ -41,7 +41,7 @@
   <!-- Adicione a classe mt-4 aqui -->
   <div class="card w-100 h-100">
     <div class="card-header">
-      <h3 class="card-title">Nova Matricula</h3>
+      <h3 class="card-title">Nova Inscrição</h3>
       <div class="card-tools">
         <!-- Botão Fechar -->
         <button type="button" class="btn btn-tool" data-card-widget="remove">
@@ -84,7 +84,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="course_id">Course</label>
+                    <label for="course_id">Curso</label>
                     <select class="form-control select2" style="width: 100%;" name="selectCourse" id="selectCourse">
                       <option value="" disabled selected>Selecione o curso</option>
                       @foreach ($courses as $course)
@@ -95,9 +95,9 @@
                   </div>
                   <input type="text" hidden id="course_id" name="course_id">
                   <div class="form-group">
-                    <label for="price_enrollemnt">Preço da matricula:</label>
+                    <label for="price_enrollemnt">Preço da mensalidade:</label>
                     <input type="number" min="500" max="500" class="form-control" id="price_enrollemnt"
-                      name="price_enrollemnt" required placeholder="Digite o preço da Matricula" readonly>
+                      name="price_enrollemnt" required placeholder="Digite o preço da mensalidade" readonly>
                   </div>
 
                   <div class="form-group">
