@@ -55,4 +55,5 @@ Route::middleware([
 
 Auth::routes();
 
+Route::get('/distritos', [App\Http\Controllers\GetDistritController::class, 'index'])->name('distritos');
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');

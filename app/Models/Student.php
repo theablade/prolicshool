@@ -31,6 +31,8 @@ class Student extends Model
          'avenida',
          'horario',
          'resprovincia',
-         'redistrito'
+         'redistrito',
+         'data_inscricao',
+         'numero_casa'
      ];
 }

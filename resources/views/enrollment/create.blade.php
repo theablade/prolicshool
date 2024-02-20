@@ -75,23 +75,37 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="student_id">Estudantes</label>
-                    <select class="form-control select2" style="width: 100%;" name="student_id" id="student_id">
-                      <option value="" disabled selected>Selecione um estudante</option>
-                      @foreach ($students as $student)
-                      <option value="{{$student->id}}">{{$student->nome}}</option>
-                      @endforeach
-                    </select>
+
+
+                    <div class="input-group-append">
+
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="student_id" id="student_id">
+                        <option value="" disabled selected>Selecione um estudante</option>
+                        @foreach ($students as $student)
+                        <option value="{{$student->id}}">{{$student->nome}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
+
                   </div>
+
 
                   <div class="form-group">
                     <label for="course_id">Curso</label>
-                    <select class="form-control select2" style="width: 100%;" name="selectCourse" id="selectCourse">
-                      <option value="" disabled selected>Selecione o curso</option>
-                      @foreach ($courses as $course)
-                      <option value="{{$course->id}}_{{$course->price_enrollemnt}}_{{$course->price_subscrab}}">
-                        {{$course->nome}}</option>
-                      @endforeach
-                    </select>
+                    <div class="input-group-append">
+
+                      <span class="input-group-text"><i class="fas fa-book"></i></span>
+                      <select class="form-control select2" style="width: 100%;" name="selectCourse" id="selectCourse">
+                        <option value="" disabled selected>Selecione o curso</option>
+                        @foreach ($courses as $course)
+                        <option value="{{$course->id}}_{{$course->price_enrollemnt}}_{{$course->price_subscrab}}">
+                          {{$course->nome}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+
                   </div>
                   <input type="text" hidden id="course_id" name="course_id">
                   <div class="form-group">
@@ -103,7 +117,8 @@
                   <div class="form-group">
                     <label for="price_enrollemnt">Preço da Inscrição:</label>
                     <input type="number" min="100" max="250" class="form-control" id="price_subscrab"
-                      name="price_subscrab" required placeholder="Digite o preço da Inscrição" readonly>
+                      name="price_subscrab" required placeholder="Digite o preço da Inscrição" readonly
+                      value="{{old('price_subscrab')}}">
 
                   </div>
                 </div>
@@ -111,24 +126,34 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="pagamento">Tipo de pagamento:</label>
-                    <select id="type_payment" name="type_payment" class="form-control">
-                      <option value="" selected disabled> Selecione o tipo de pagamento</option>
-                      <option value="Dinheiro">Dinheiro</option>
-                      <option value="Deposito">Deposito</option>
-                      <option value="Trasferencia">Trasferencia</option>
-                    </select>
+                    <div class="input-group-append">
+
+                      <span class="input-group-text"><i class="fas fa-money-check"></i></span>
+                      <select id="type_payment" name="type_payment" class="form-control"
+                        value="{{old('type_payment')}}">
+                        <option value="" selected disabled> Selecione o tipo de pagamento</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Deposito">Deposito</option>
+                        <option value="Trasferencia">Trasferencia</option>
+                      </select>
+                    </div>
+
                   </div>
                   <div class="form-group">
                     <label for="number_doc" id="label_doc">Numero do talão:</label>
-                    <input type="number" class="form-control" id="number_doc" name="number_doc" required
-                      placeholder="Digite o Numero do talao">
+                    <input type="number" class="form-control" value="{{old('number_doc')}}" id="number_doc"
+                      name="number_doc" required placeholder="Digite o Numero do talao">
                   </div>
                   <div class="form-group">
                     <label for="enrollment_date">Data da matricula:</label>
-                    <input type="date" class="form-control" id="enrollment_date" name="enrollment_date" required
-                      placeholder="Digite o Numero do talao">
+                    <div class="input-group">
+                      <div class="input-group-append">
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                      </div>
+                      <input class="form-control" type="text" id="enrollment_date" name="enrollment_date"
+                        value="{{ $currentDateTime->format('Y-m-d') }}" readonly>
+                    </div>
                   </div>
-
                 </div>
 
               </div>
@@ -178,7 +203,7 @@
 
     $("#course_id").val(course_id);
     $("#price_enrollemnt").val(price_enrollemnt);
-    $("#price_subscrab").val(price_subscrab);
+    $("#price_subscrab").val(price_subscrab)
 
     var total = price_enrollemnt + price_subscrab;
     $(".total_price").text(total.toLocaleString('pt-BR', {

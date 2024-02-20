@@ -3,6 +3,16 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
+
+<head>
+  <style>
+  #calendar {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  </style>
+</head>
 <h1>Admin Dashboard</h1>
 @stop
 
@@ -12,13 +22,13 @@
 
     <div class="small-box bg-info">
       <div class="inner">
-        <h3>150</h3>
-        <p>New Orders</p>
+        <h3>{{$formattedTotalMonthly}} Mts</h3>
+        <p>Mensalidades</p>
       </div>
       <div class="icon">
-        <i class="ion ion-bag"></i>
+        <i class="far fa-money-bill-alt"></i>
       </div>
-      <a href="#" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="monthlypayment" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
 
@@ -40,11 +50,11 @@
 
     <div class="small-box bg-warning">
       <div class="inner">
-        <h3>{{$user}}</h3>
-        <p>Estudantes</p>
+        <h3>{{$totalStudents}}</h3>
+        <p>Alunos registados</p>
       </div>
       <div class="icon">
-        <i class="fas fa-fw fa-user"></i>
+        <i class="fa fa-user-plus"></i>
       </div>
       <a href="student" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
@@ -54,26 +64,32 @@
 
     <div class="small-box bg-danger">
       <div class="inner">
-        <h3>65</h3>
-        <p>Unique Visitors</p>
+        <h3>{{$totalenrollments}}</h3>
+        <p>Matriculas</p>
       </div>
       <div class="icon">
         <i class="ion ion-pie-graph"></i>
       </div>
-      <a href="#" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="enrollment" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
 
+
+</div>
+
+<div class="row">
 
 </div>
 @stop
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+
 @stop
 
 @section('js')
+
 <script>
-console.log('Hi!');
+
 </script>
 @stop

@@ -6,6 +6,8 @@ use App\Models\Province;
 use App\Models\District;
 use App\Http\Requests\studentFormRequest;
 use Illuminate\Http\Request;
+use App\Events\StudentCreated;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
@@ -29,9 +31,10 @@ class StudentController extends Controller
 
     public function create()
     {
+         $currentDateTime = Carbon::now();
         $provinces = Province::all();
         $districts = District::all();
-         return view("student.create", compact('provinces', 'districts'));
+        return view("student.create", compact('provinces', 'districts', 'currentDateTime'));
     }
 
  
@@ -40,20 +43,13 @@ class StudentController extends Controller
        $student = new Student;
 
     
-    if ($request->hasFile('img')) {
-    
-        $path = $request->file('img')->store('public/images');
-
-      
-        $student->img_path = $path;
-    }
 
     $student->fill($request->all());
 
    
     $student->save();
 
- 
+        event(new StudentCreated($student));
     return redirect()->route("student.index")->with("msg", "Estudante salvo com sucesso");
     }
 

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Student')
+@section('title', 'Estudante')
 
 @section('content_header')
 @stop

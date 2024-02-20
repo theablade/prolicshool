@@ -31,15 +31,7 @@
   @endif
 
 </div>
-<div class="container-fluid">
 
-  @if(session('msg'))
-  <div class="row success-message"">
-    <p class=" msg">{{session('msg')}}</p>
-  </div>
-  @endif
-
-</div>
 <div class="container-fluid">
   <div class="card w-100 h-100">
     <div class="card-header">
@@ -89,8 +81,9 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Curso</th>
-                    <th>Matricula</th>
-                    <th>Inscrição</th>
+                    <th>Mensalidade</th>
+                    <th>Pagamento</th>
+                    <th>Dia do pag.</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -100,21 +93,29 @@
                   <tr>
                     <td>{{ $monthlypayment->id }}</td>
                     <td setTimeout(function() { document.getElementById('success-message').style.display='none' ; },
-                      3000);>{{ $monthlypayment->student }}</td>
-                    <td>{{ $monthlypayment->course }}</td>
-                    <td>{{ $monthlypayment->price_enrollemnt }}</td>
-                    <td>{{ $monthlypayment->price_subscrab }}</td>
-                    <td>
+                      3000);>{{ $monthlypayment->student }}
+                    </td>
 
-                      @if($monthlypayment->status =="Pendente")
+                    <td>{{ $monthlypayment->course }}</td>
+
+                    <td>{{$monthlypayment->price_enrollemnt}}</td>
+
+                    <td>{{$monthlypayment->type_payment}}</td>
+
+                    <td>{{$monthlypayment->payment_date}}</td>
+
+                    <td>
+                      @if($monthlypayment->payment_status =="Pendente")
                       <span class="badge badge-danger p-2">
-                        {{ $monthlypayment->status}}
+                        {{ $monthlypayment->payment_status}}
                       </span>
-                      @else
+                      @elseif($monthlypayment->payment_status =="Pago")
                       <span class="badge badge-primary p-2">
-                        {{ $monthlypayment->status}}
+                        {{ $monthlypayment->payment_status}}
                       </span>
-                      @endif
+                    </td>
+
+                    @endif
                     </td>
                     <td>
                       <a href="{{ route('monthlypayment.show', $monthlypayment->id) }}">Ver</a>

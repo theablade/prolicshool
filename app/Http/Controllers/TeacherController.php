@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
-
+use App\Models\Province;
+use App\Models\District;
+use App\Http\Requests\TeacherFormRequest;
+use Carbon\Carbon;
 class TeacherController extends Controller
 {
     public function index(Request $request)
@@ -17,7 +20,7 @@ class TeacherController extends Controller
 
          $teachers = Teacher::where("nome", "like","%".$var."%")
          ->orWhere("genero","like","%".$var."%")
-         ->orWhere("endereco","like","%".$var."%")
+         ->orWhere("email","like","%".$var."%")
          ->paginate(5)->fragment('teachers');
           return view("teacher.index", ['teachers' => $teachers, 'searchresult'=> $var]);
 
@@ -30,40 +33,21 @@ class TeacherController extends Controller
  
     public function create()
     {
-        return view("teacher.create");
+         $currentDateTime = Carbon::now();
+        $provinces = Province::all();
+        $districts = District::all();
+        return view("teacher.create", compact('provinces', 'districts', 'currentDateTime'));
+
     }
 
 
-    public function store(Request $request)
+    public function store(TeacherFormRequest $request)
     {
    
-        $validatedData = $request->validate([
-        'nome' => 'required',
-        'email' => 'required|email',
-        'genero' => 'required',
-        'data_nascimento' => 'required|date',
-        'tipodoc' => 'required',
-        'numerodoc' => 'required',
-        'endereco' => 'required',
-        'telefone' => 'required',
-        'disciplina' => 'required',
-        'data_contratacao' => 'required|date',
-        'salario' => 'required|numeric',
-    ]);
 
     $teacher = new Teacher();
-    $teacher->nome = $request->input('nome');
-    $teacher->email = $request->input('email');
-    $teacher->genero = $request->input('genero');
-    $teacher->data_nascimento = $request->input('data_nascimento');
-    $teacher->tipodoc = $request->input('tipodoc');
-    $teacher->numerodoc = $request->input('numerodoc');
-    $teacher->endereco = $request->input('endereco');
-    $teacher->telefone = $request->input('telefone');
-    $teacher->disciplina = $request->input('disciplina');
-    $teacher->data_contratacao = $request->input('data_contratacao');
-    $teacher->salario = $request->input('salario');
 
+        $teacher ->fill($request->all());
     $teacher->save();
 
     return redirect()->route('teacher.index')->with('success', 'Professor cadastrado com sucesso');
@@ -115,4 +99,7 @@ class TeacherController extends Controller
         return redirect()->route("teacher.index")
         ->with("success","apagado com sucesso");
     }
+
+
+    
 }

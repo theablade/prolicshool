@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Enrollment;
 use App\Models\Student;
 use App\Models\Courses;
+use App\Http\Requests\EnrollmentFormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 class EnrollmentController extends Controller
 {
@@ -35,21 +38,21 @@ class EnrollmentController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
+    { 
+        $currentDateTime = Carbon::now();
         $students = Student::all();
         $courses = Courses::all();
-         return view("enrollment.create", compact('students', 'courses'));
+         return view("enrollment.create", compact('students', 'courses', 'currentDateTime'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function store(EnrollmentFormRequest $request)
     {
-        $enrollment =  Enrollment::create($request->all());
+        $enrollment = new Enrollment;
+        $enrollment->fill($request->all());
         $enrollment->save();
         return redirect()->route("enrollment.index")
-                         ->with("success","Curso salvo com sucezsso");//
+                         ->with("success","Curso salvo com sucesso");
     }
 
     /**
@@ -61,13 +64,10 @@ class EnrollmentController extends Controller
          $enrollment = DB::table('enrollment as e') 
             ->join('students as s', 'e.student_id', '=', 's.id'  )
             ->join('courses as c', 'e.course_id', '=', 'c.id')
-            ->select('e.id', 'e.status', 's.nome as student', 's.ntelefone', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+            ->select('e.id', 'e.payment_status', 'e.status', 's.nome as student', 's.ntelefone', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
             ->where('e.student_id', '=', $id)
             ->get();
 
-
-            
-       
         return view('enrollment.show', ['enrollments' => $enrollment]);
     }
 
@@ -112,4 +112,6 @@ class EnrollmentController extends Controller
       ->with('success','Matricula '.$enrollmentStatus->status);
        
     }
+
+    
 }

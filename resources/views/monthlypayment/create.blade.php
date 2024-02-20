@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Enrollent')
+@section('title', 'Mensalidade')
 
 @section('content_header')
 @stop
@@ -74,6 +74,17 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
+                    <label for="payment_status">Status da mensalidade</label>
+                    <select class="form-control select2" style="width: 100%;" name="payment_status" id="payment_status">
+                      <option value="" disabled selected>Selecione o status</option>
+
+                      <option value="Pago">Pago</option>
+                      <option value="Pendente">Pendente</option>
+
+
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="student_id">Estudantes</label>
                     <select class="form-control select2" style="width: 100%;" name="student_id" id="student_id">
                       <option value="" disabled selected>Selecione um estudante</option>
@@ -88,22 +99,43 @@
                     <select class="form-control select2" style="width: 100%;" name="selectCourse" id="selectCourse">
                       <option value="" disabled selected>Selecione o curso</option>
                       @foreach ($courses as $course)
-                      <option value="{{$course->id}}_{{$course->price_enrollemnt}}_{{$course->price_subscrab}}">
+                      <option value="{{$course->id}}_{{$course->price_enrollemnt}}">
                         {{$course->nome}}</option>
                       @endforeach
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label for="payment_status">Mensalidade de</label>
+                    <div class="form-group">
+                      <select class="form-control" id="month" name="month">
+                        <option value="" disabled selected>Selecione o mês</option>
+                        <option value="Janeiro">Janeiro</option>
+                        <option value="Fevereiro">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                      </select>
+                    </div>
+
+                  </div>
                   <input type="text" hidden id="course_id" name="course_id">
                   <div class="form-group">
-                    <label for="price_enrollemnt">Preço da matricula:</label>
+                    <label for="price_enrollemnt">Valor a ser pago:</label>
                     <input type="number" min="500" max="500" class="form-control" id="price_enrollemnt"
-                      name="price_enrollemnt" required placeholder="Digite o preço da Matricula" readonly>
+                      name="price_enrollemnt" required placeholder="Digite o valor a ser pago" readonly>
                   </div>
 
-                  <div class="form-group">
-                    <label for="price_enrollemnt">Preço da Inscrição:</label>
-                    <input type="number" min="100" max="250" class="form-control" id="price_subscrab"
-                      name="price_subscrab" required placeholder="Digite o preço da Inscrição" readonly>
+                  <div class=" form-group">
+                    <label for="price_enrollemnt">Vencimento:</label>
+                    <input type="date" class="form-control" value="{{$endDate->toDateString() }}" id="endDate"
+                      name="endDate" readonly>
 
                   </div>
                 </div>
@@ -120,22 +152,27 @@
                   </div>
                   <div class="form-group">
                     <label for="number_doc" id="label_doc">Numero do talão:</label>
-                    <input type="number" class="form-control" id="number_doc" name="number_doc" required
+                    <input type="number" class="form-control" id="number_doc" name="number_doc"
                       placeholder="Digite o Numero do talao">
                   </div>
+
                   <div class="form-group">
-                    <label for="monthlypayment_date">Data da matricula:</label>
-                    <input type="date" class="form-control" id="monthlypayment_date" name="monthlypayment_date" required
-                      placeholder="Digite o Numero do talao">
+                    <label for="payment_history" id="label_doc">Observações:</label>
+                    <input type="numbertext" class="form-control" id="payment_history" name="payment_history"
+                      placeholder="Observações">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="payment_date">Data de pagamento:</label>
+                    <input type="date" class="form-control" id="payment_date" name="payment_date" </div>
+
                   </div>
 
                 </div>
 
-              </div>
-
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Salvar</button>
-              </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
           </form>
 
         </div>
@@ -174,13 +211,12 @@
     var prices = document.getElementById('selectCourse').value.split('_');
     var course_id = parseInt(prices[0]);
     var price_enrollemnt = parseFloat(prices[1]);
-    var price_subscrab = parseFloat(prices[2]);
 
     $("#course_id").val(course_id);
     $("#price_enrollemnt").val(price_enrollemnt);
-    $("#price_subscrab").val(price_subscrab);
 
-    var total = price_enrollemnt + price_subscrab;
+
+    var total = price_enrollemnt
     $(".total_price").text(total.toLocaleString('pt-BR', {
       style: 'decimal',
       minimumFractionDigits: 2

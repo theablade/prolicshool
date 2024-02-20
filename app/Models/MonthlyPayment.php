@@ -14,10 +14,14 @@ class MonthlyPayment extends Model
         'enrollment_id',
         'price_enrollemnt',
         'payment_date',
-        'payment_method',
+        
          'payment_status',
          'course_id',
-         'student_id'
+         'student_id',
+         'month',
+         'type_payment',
+         'payment_history',
+         'endDate'
         
      ];
 }

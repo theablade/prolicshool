@@ -11,17 +11,30 @@ class Teacher extends Model
      protected $primaryKey = 'id';
       public $timestamps = false;
      protected $fillable = [
-        'nome',
-        'email',
-        'disciplina',
-        'data_nascimento',
+           'nome',
+        'ntelefone',
         'genero',
-        'telefone',
-        'endereco',
-        'numerodoc ',
-        'data_contratacao',
-        'status',
-        'salario',
+          'course_id',
+        'data_nascimento',
+        'provincia',
+        'distrito',
+        'nacionalidade',
         'tipodoc',
+        'numerodoc',
+        'data_emisao',
+        'data_validade',
+        'email',
+        'img',
+         'bairro',
+         'quarterao',
+         'avenida',
+         'horario',
+         'resprovincia',
+         'redistrito',
+         'data_contratacao',
+         'numero_casa'
+
+    
+      
      ];
 }

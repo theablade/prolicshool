@@ -356,13 +356,7 @@ return [
                     'url'  => 'discipline',
                     'icon'    => 'fas fa-book-open',
                        'active'  => ['discipline', 'discipline*', 'regex:@^content/[0-9]+$@']
-                ],
-                [
-                    'text' => 'Turma',
-                    'url'  => 'turma',
-                    'icon'    => 'fas fa-chalkboard',
-                       'active'  => ['turma', 'turma*', 'regex:@^content/[0-9]+$@']
-                ],
+                ]
             ],
         ],
 

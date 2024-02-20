@@ -66,7 +66,7 @@
                   <th>ID</th>
                   <th>Nome</th>
                   <th>Email</th>
-                  <th>Endereço</th>
+
                   <th>Telefone</th>
                   <th>Documento</th>
                   <th>Ações</th>
@@ -78,8 +78,8 @@
                   <td>{{ $teacher->id }}</td>
                   <td>{{ $teacher->nome }}</td>
                   <td>{{ $teacher->email }}</td>
-                  <td>{{ $teacher->endereco }}</td>
-                  <td>{{ $teacher->telefone }}</td>
+
+                  <td>{{ $teacher->ntelefone }}</td>
                   <td>{{ $teacher->tipodoc }} : {{ $teacher->numerodoc }}</td>
                   <td>
                     <a href="{{ route('teacher.show', $teacher->id) }}">Ver</a>
