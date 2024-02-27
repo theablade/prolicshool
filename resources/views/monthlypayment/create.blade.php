@@ -73,17 +73,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="payment_status">Status da mensalidade</label>
-                    <select class="form-control select2" style="width: 100%;" name="payment_status" id="payment_status">
-                      <option value="" disabled selected>Selecione o status</option>
 
-                      <option value="Pago">Pago</option>
-                      <option value="Pendente">Pendente</option>
-
-
-                    </select>
-                  </div>
                   <div class="form-group">
                     <label for="student_id">Estudantes</label>
                     <select class="form-control select2" style="width: 100%;" name="student_id" id="student_id">

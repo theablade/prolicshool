@@ -22,7 +22,8 @@ class EnrollmentFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-          'number_doc' => 'required|max:15|unique:enrollment', 
+        'number_doc' => 'nullable|max:15|unique:enrollment,number_doc,NULL,id', 
+
         ];
     }
 

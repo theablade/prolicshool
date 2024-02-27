@@ -50,11 +50,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6 col-sm-6">
-          <a href="{{ route('monthlypayment.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-book-reader"></i> +
-          </a>
-        </div>
+
         <div class="col-md-6 col-sm-6">
           <form action="{{ route('monthlypayment.index') }}">
             <div class="input-group">
@@ -81,10 +77,6 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Curso</th>
-                    <th>Mensalidade</th>
-                    <th>Pagamento</th>
-                    <th>Dia do pag.</th>
-                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -97,35 +89,11 @@
                     </td>
 
                     <td>{{ $monthlypayment->course }}</td>
-
-                    <td>{{$monthlypayment->price_enrollemnt}}</td>
-
-                    <td>{{$monthlypayment->type_payment}}</td>
-
-                    <td>{{$monthlypayment->payment_date}}</td>
-
-                    <td>
-                      @if($monthlypayment->payment_status =="Pendente")
-                      <span class="badge badge-danger p-2">
-                        {{ $monthlypayment->payment_status}}
-                      </span>
-                      @elseif($monthlypayment->payment_status =="Pago")
-                      <span class="badge badge-primary p-2">
-                        {{ $monthlypayment->payment_status}}
-                      </span>
-                    </td>
-
-                    @endif
                     </td>
                     <td>
                       <a href="{{ route('monthlypayment.show', $monthlypayment->id) }}">Ver</a>
                       <a href="{{ route('monthlypayment.edit', $monthlypayment->id) }}">Edit</a>
-                      <form action="{{ route('monthlypayment.destroy', $monthlypayment ->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                          onclick="return confirm('Are you sure you want to delete this monthlypayment?')">Delete</button>
-                      </form>
+
                     </td>
 
 

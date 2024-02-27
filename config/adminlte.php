@@ -319,7 +319,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Usuario',
-                    'url'  => 'usuario',
+                    'url'  => 'resgistro',
                     'icon'    => 'fas fa-fw fa-user',
                     'active'  => ['usuario', 'usuario*', 'regex:@^content/[0-9]+$@']
                 ],

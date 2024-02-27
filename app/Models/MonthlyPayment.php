@@ -14,7 +14,6 @@ class MonthlyPayment extends Model
         'enrollment_id',
         'price_enrollemnt',
         'payment_date',
-        
          'payment_status',
          'course_id',
          'student_id',

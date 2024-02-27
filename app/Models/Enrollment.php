@@ -12,7 +12,7 @@ class Enrollment extends Model
       public $timestamps = false;
      protected $fillable = [
         'enrollment_date',
-        'price_enrollemnt',
+        'price_subscrab',
         'type_payment',
         'number_doc',
          'status',

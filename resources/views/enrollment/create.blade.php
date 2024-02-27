@@ -141,8 +141,8 @@
                   </div>
                   <div class="form-group">
                     <label for="number_doc" id="label_doc">Numero do talão:</label>
-                    <input type="number" class="form-control" value="{{old('number_doc')}}" id="number_doc"
-                      name="number_doc" required placeholder="Digite o Numero do talao">
+                    <input type="number" class="form-control" id="number_doc" name="number_doc"
+                      placeholder="Digite o Numero do talao">
                   </div>
                   <div class="form-group">
                     <label for="enrollment_date">Data da matricula:</label>

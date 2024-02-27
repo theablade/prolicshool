@@ -7,7 +7,7 @@ use App\Models\User;
 class UserPolicy
 {
      public function accessUser(User $user){
-        return $user ->email ==='nelson@gmail.com';
+        return $user ->email ==='User';
     }
 
     public function __construct()

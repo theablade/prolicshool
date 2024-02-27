@@ -8,7 +8,7 @@ class AdminPolicy
 {
      
     public function accessAdmin(User $user){
-        return $user ->email ==='fmuethea9@gmail.com';
+        return $user ->role ==='Admin';
     }
 
     public function __construct()

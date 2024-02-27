@@ -17,35 +17,36 @@ public function index(Request $request)
 {
     $var = $request->searchresult;
     
-    // Executa a consulta para obter os dados
-    $monthlypayment = DB::table('monthly_payment as m')
-    ->join('students as s', 'm.student_id', '=', 's.id'  )
-    ->join('courses as c', 'm.course_id', '=', 'c.id')
-        ->select('m.id', 'm.payment_status','s.nome as student', 'm.price_enrollemnt', 'm.type_payment', 'c.nome as course', 'm.payment_date', 'm.student_id')
-        
-        ->paginate(5);  
+   
+    $monthlypayment = DB::table('students as s')
+        ->join('enrollment as e', 's.id', '=', 'e.student_id')
+    ->join('courses as c', 'e.course_id', '=', 'c.id')
+        ->select('s.id','s.nome as student', 'c.nome as course')
+           ->where('s.nome', 'LIKE', '%'.$var.'%')
+            ->orWhere('c.nome', 'LIKE', '%'.$var.'%')
+        ->paginate(10);  
 
-    // Verifica se há resultados
+    
+
+    
     if ($monthlypayment->isEmpty()) {
      
         return view("monthlypayment.index", [
             'monthlypayments' => $monthlypayment,
             'searchresult' => $var,
-            'noResults' => true, // Adiciona uma flag para indicar que não há resultados
+            'noResults' => true, 
         ]);
     } else {
-        // Se houver resultados, renderiza a view com os resultados
+       
         return view("monthlypayment.index", [
             'monthlypayments' => $monthlypayment,
             'searchresult' => $var,
-            'noResults' => false, // Adiciona uma flag para indicar que há resultados
+            'noResults' => false, 
         ]);
     }
 }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
 
@@ -68,7 +69,7 @@ public function index(Request $request)
         $monthlypayment->fill($request->all());
         $monthlypayment->save();
         return redirect()->route("monthlypayment.index")
-                         ->with("success","Curso salvo com sucesso");
+                         ->with("success","Matricula salva com sucesso");
        
     }
 
@@ -77,7 +78,28 @@ public function index(Request $request)
      */
     public function show(string $id)
     {
-        //
+        
+        $student = DB::table('monthly_payment as m')
+        ->join('students as s', 'm.student_id', '=', 's.id')
+        ->join('courses as c', 'm.course_id', '=', 'c.id')
+        ->select('s.id','s.nome as student' , 's.ntelefone', 'c.nome as course', 'c.id as idcourse')
+        ->where('s.id', '=', $id)
+        ->first();
+
+    
+        
+        $monthys = DB:: table('monthly_payment')
+        ->where('student_id', '=', $id)
+       
+        ->get();
+
+        return view('monthlypayment.show', compact('student', 'monthys'));
+        
+        
+    
+         
+    
+    
     }
 
     /**
@@ -93,14 +115,39 @@ public function index(Request $request)
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        
+         $monthlypayment = MonthlyPayment::findOrFail($id);
+
+         $course_price = DB::table('courses')
+         ->select('price_enrollemnt as price')
+         ->where('id', '=', $monthlypayment->course_id)
+         ->first();
+
+
+         $monthlypayment -> price_enrollemnt = $course_price->price;
+           $monthlypayment ->payment_status = 'Pago';
+         $monthlypayment ->payment_date = Carbon::now();
+         setlocale(LC_TIME, 'pt_BR');
+           $monthName = utf8_encode(Carbon::parse($monthlypayment->endDate)->formatLocalized('%B'));
+
+       $monthlypayment->update();
+        return redirect()->back()->with('msg', 'A mensalidade do mês de '. $monthName. ' Foi paga');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy( $id)
     {
-        //
+        $monthlypayment = MonthlyPayment::findOrFail($id);
+         $monthlypayment -> price_enrollemnt = 0;
+           $monthlypayment ->payment_status = 'Pendente';
+         $monthlypayment ->payment_date = null;
+       setlocale(LC_TIME, 'pt_BR');
+           $monthName = utf8_encode(Carbon::parse($monthlypayment->endDate)->formatLocalized('%B'));
+
+       $monthlypayment->update();
+         return redirect()->back()->with('msg', 'A mensalidade  do mês de '. $monthName. ' Foi cancelada');
     }
 }

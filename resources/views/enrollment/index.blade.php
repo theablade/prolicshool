@@ -41,7 +41,7 @@
 
 </div>
 <div class="container-fluid">
-  <div class="card w-100 h-100">
+  <div class="card w-100 h-80">
     <div class="card-header">
       <h3 class="card-title">Lista de Inscrições</h3>
       <div class="card-tools">
