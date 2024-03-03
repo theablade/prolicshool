@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Estudante')
+@section('title', 'Alunos')
 
 @section('content_header')
 @stop
@@ -8,7 +8,8 @@
 @section('content')
 
 <head>
-
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <style>
   .success-message {
     background-color: #d4edda;
@@ -18,6 +19,24 @@
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: .25rem;
+  }
+
+  .add-dowloand {
+    display: flex;
+    gap: 1rem;
+
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+
+
+  button {
+    background: none;
+    border: none;
   }
   </style>
 </head>
@@ -35,7 +54,7 @@
 <div class="container-fluid">
   <div class="card w-100 h-100">
     <div class="card-header">
-      <h3 class="card-title">Lista de Estudantes</h3>
+      <h3 class="card-title">Lista de alunos</h3>
       <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="remove">
           <i class="fas fa-times"></i>
@@ -50,11 +69,28 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6 col-sm-6">
+
+        <div class="col-md-6 add-dowloand col-sm-6">
           <a href="{{ route('student.create') }}" class="btn btn-primary mb-3">
             <i class="fas fa-book-reader"></i> +
           </a>
+          <div class="col-md-2 col-sm-6">
+            @if ($searchresult)
+            <a href="{{ route('student.pdf', ['parametro' => $searchresult]) }}"><span
+                class="btn btn-secondary mb-3 material-symbols-outlined">
+                picture_as_pdf
+              </span></a>
+            @else
+            <a href="{{ route('students.pdf') }}"><span class="btn btn-secondary mb-3 material-symbols-outlined">
+                picture_as_pdf
+              </span></a>
+            @endif
+
+          </div>
         </div>
+
+
+
         <div class="col-md-6 col-sm-6">
           <form action="{{ route('student.index') }}">
             <div class="input-group">
@@ -80,7 +116,7 @@
             @else
             <div class="table-responsive">
               <table class="table table-bordered table-striped">
-                <thead class="table-dark">
+                <thead>
                   <tr>
                     <th>ID</th>
                     <th>Nome</th>
@@ -122,14 +158,33 @@
                     @endif
 
                     <td>
-                      <a href="{{ route('student.show', $student->id) }}">Ver</a>
-                      <a href="{{ route('student.edit', $student->id) }}">Edit</a>
-                      <form action="{{ route('student.destroy', $student ->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                          onclick="return confirm('Tens certeza que queres apagar esse estudante?')">Delete</button>
-                      </form>
+                      <div class="actions">
+                        <div>
+
+                          <a class="btn btn-info" href="{{ route('student.show', $student->id) }}"><span
+                              class="material-symbols-outlined">
+                              visibility
+                            </span></a>
+                        </div>
+                        <div>
+
+                          <a class="btn btn-success" href="{{ route('student.edit', $student->id) }}"><span
+                              class="material-symbols-outlined">
+                              edit
+                            </span></a>
+                        </div>
+                        <form action="{{ route('student.destroy', $student ->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Tens certeza que queres apagar esse estudante?')">
+                            <span class="material-symbols-outlined">
+                              delete
+                            </span>
+                          </button>
+                        </form>
+                      </div>
+
                     </td>
 
 

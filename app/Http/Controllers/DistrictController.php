@@ -104,11 +104,6 @@ class DistrictController extends Controller
         return redirect()->route("district.index");
     }
 
-public function getDistrictsByProvince(Request $request)
-{
-   $provincia_id = $request->input('provincia_id');
-        $districts = District::where('provincia_id', $provincia_id)->pluck('nome', 'id');
-        return response()->json($districts);
-}
+
 
 }

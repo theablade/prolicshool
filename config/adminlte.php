@@ -378,59 +378,7 @@ return [
                     'active'  => ['monthlypayment', 'monthlypayment*', 'regex:@^content/[0-9]+$@']
                 ],
             ],
-        ],
-
-               [
-            'text'    => 'Relatorio',
-            'icon'    => 'fas fa-fw fa-book',
-            'submenu' => [
-                [
-                    'text' => 'Matriculas',
-                    'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-user',
-                 'active'  => ['enrollent', 'enrollent*', 'regex:@^content/[0-9]+$@']
-                ],
-                
-                [
-                    'text' => 'Incricao',
-                    'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-user',
-                 'active'  => ['inscricao', 'inscricao*', 'regex:@^content/[0-9]+$@']
-                ],
-                [
-                    'text' => 'Mensalidade',
-                    'url'  => '#',
-                    'icon'    => 'fas fa-fw fa-user',
-                 
-                ],
-            ],
-        ],
-
-               [
-            'text'    => 'Definições',
-            'icon'    => 'fa fa-cog',
-            'submenu' => [
-                [
-                    'text' => 'Entidade',
-                    'url'  => 'entidade',
-                    'icon'    => 'fas fa-id-card-alt',
-                 'active'  => ['entidade', 'entidade*', 'regex:@^content/[0-9]+$@']
-                ],
-                
-                [
-                    'text' => 'Provicias',
-                    'url'  => 'province',
-                    'icon'    => '	far fa-map',
-                 'active'  => ['province', 'province*', 'regex:@^content/[0-9]+$@']
-                ],
-                [
-                    'text' => 'Distritos',
-                    'url'  => 'district',
-                    'icon'    => 'fas fa-map-marker-alt',
-                    'active'  => ['district', 'district*', 'regex:@^content/[0-9]+$@']
-                ],
-            ],
-        ],
+        ]
         
     ],
 

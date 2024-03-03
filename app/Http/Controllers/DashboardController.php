@@ -24,18 +24,25 @@ class DashboardController extends Controller
 
         $monty = DB::table('monthly_payment')
          ->select(DB::raw('sum(price_enrollemnt) as total'),  DB::raw('count(id) as qtmonty'), DB::raw('Month(payment_date) as meses'))
-        ->whereYear('payment_date', $ano)
-        ->whereMonth('payment_date', $mes)
+         ->whereYear('payment_date', $ano)
         ->where('payment_status', 'Pago')
           ->groupBy(DB::raw('Month(payment_date)'))
-        ->orderBy('meses', 'DESC')
+        ->orderBy('meses', 'ASC')
          ->get();
+
 
           $year = DB::table('monthly_payment')
          ->select(DB::raw('sum(price_enrollemnt) as total'),  DB::raw('count(id) as qtyears'), DB::raw('Year(payment_date) as years'))
-        ->whereYear('payment_date', $ano)
         ->where('payment_status', 'Pago')
           ->groupBy(DB::raw('Year(payment_date)'))
+        ->orderBy('years', 'DESC')
+         ->get();
+     
+          $year2 = DB::table('enrollment')
+         ->select(DB::raw('sum(price_subscrab) as total'),  DB::raw('count(id) as qtyears'), DB::raw('Year(enrollment_date) as years'))
+        ->whereYear('enrollment_date', $ano)
+        ->where('status', 'Activo')
+          ->groupBy(DB::raw('Year(enrollment_date)'))
         ->orderBy('years', 'DESC')
          ->get();
      
@@ -51,6 +58,14 @@ class DashboardController extends Controller
         ->whereMonth('payment_date', $mes)
         ->first();
 
+
+        $monty2 = DB::table('enrollment')
+         ->select(DB::raw('sum(price_subscrab) as total'),  DB::raw('count(id) as qtmontyEnroll'), DB::raw('Month(enrollment_date) as mesesenroll'))
+        ->where('status', 'Activo')
+          ->groupBy(DB::raw('Month(enrollment_date)'))
+        ->orderBy('mesesenroll', 'ASC')
+         ->get();
+
            $yearEnrollment = DB::table('enrollment')
         ->select(DB::raw('sum(price_subscrab) as total'))
         ->whereYear('enrollment_date', $ano)
@@ -62,7 +77,7 @@ class DashboardController extends Controller
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'year'));
+        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2'));
     }
 
     

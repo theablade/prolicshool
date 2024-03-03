@@ -48,12 +48,14 @@ Route::resource('district',DistrictController::class);
 Route::resource('enrollment',EnrollmentController::class);
 Route::resource('monthlypayment',MonthlyPaymentController::class);
 Route::resource('dashboard',DashboardController::class);
+
 Route::resource('student', StudentController::class);
 });
 
-Route::middleware(['can:accessUser, App\Models\User'])->group(function () {
-    Route::resource('student', StudentController::class)->except('index', 'create', 'update', 'edit');
-});
+Route::get('student.pdf', [StudentController::class, 'PDFLimpo'])->name('students.pdf');
+Route::get('student.pdf/{parametro}', [StudentController::class, 'PDFUser'])->name('studentx.pdf');
 
+Route::get('teacher.pdf', [TeacherController::class, 'PDFLimpo'])->name('teacher.pdf');
+Route::get('teacher.pdf/{parametro}', [TeacherController::class, 'PDFUser'])->name('teacherx.pdf');
 
 Auth::routes();

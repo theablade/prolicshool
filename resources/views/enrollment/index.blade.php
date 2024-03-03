@@ -8,7 +8,8 @@
 @section('content')
 
 <head>
-
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <style>
   .success-message {
     background-color: #d4edda;
@@ -18,6 +19,24 @@
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: .25rem;
+  }
+
+  .add-dowloand {
+    display: flex;
+    gap: 1rem;
+
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+
+
+  button {
+    background: none;
+    border: none;
   }
   </style>
 </head>
@@ -92,7 +111,7 @@
                     <th>Mensalidade</th>
                     <th>Inscrição</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th>Acções</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -121,21 +140,31 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ route('enrollment.show', $enrollment->student_id) }}">Ver</a>
-                      <form action="{{ route('enrollment.destroy', $enrollment ->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        @if($enrollment->status =="Activo")
-                        <button type="submit"
-                          onclick="return confirm('Você deseja cancelar a matricula?')">Cancelar</button>
-                        @elseif($enrollment->status =="Cancelada")
-                        <button type="submit"
-                          onclick="return confirm('Você deseja Activar a matricula?')">Activar</button>
-                        @else
-                        <button type="submit"
-                          onclick="return confirm('Você deseja Activar a matricula?')">Activar</button>
-                        @endif
-                      </form>
+                      <div class="actions">
+                        <div>
+                          <a href="{{ route('enrollment.show', $enrollment->student_id) }}">
+                            <span class="btn btn-info material-symbols-outlined">
+                              visibility
+                            </span>
+                          </a>
+                        </div>
+                        <form action="{{ route('enrollment.destroy', $enrollment ->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          @if($enrollment->status =="Activo")
+                          <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Você deseja cancelar a matricula?')">Cancelar</button>
+                          @elseif($enrollment->status =="Cancelada")
+                          <button type="submit" class="btn btn-success"
+                            onclick="return confirm('Você deseja Activar a matricula?')">Activar</button>
+                          @else
+                          <button type="submit"
+                            onclick="return confirm('Você deseja Activar a matricula?')">Activar</button>
+                          @endif
+                        </form>
+
+
+
                     </td>
 
 

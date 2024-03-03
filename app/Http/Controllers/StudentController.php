@@ -8,6 +8,9 @@ use App\Http\Requests\studentFormRequest;
 use Illuminate\Http\Request;
 use App\Events\StudentCreated;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
@@ -99,6 +102,31 @@ class StudentController extends Controller
         return redirect()->route("student.index")
                          ->with("msg","Estudante excluído com sucesso");
     }
+
+  public function PDFUser($parametro)
+{
+    if ($parametro) {
+         $students = Student::where("nome", "LIKE","%". $parametro ."%")
+         ->orWhere("genero","LIKE","%". $parametro ."%")
+         ->get();
+         
+
+	  		$pdf= FacadePdf::loadView('student.pdf', compact('students'));
+			$pdf->setPaper('A4','portrait');
+			return $pdf->stream('estudante.pdf');
+    }
+}
+
+	public function PDFLimpo()
+	{
+		 
+		$students = Student::all();
+
+
+	  		$pdf= FacadePdf::loadView('student.pdf', compact('students'));
+			$pdf->setPaper('A4','portrait');
+			return $pdf->stream('estudante.pdf');
+	}
 
     
 }

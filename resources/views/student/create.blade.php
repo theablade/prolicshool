@@ -317,16 +317,17 @@
                       <label for="provincia">Natural de </label>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="far fa-flag"></i></span>
+
                         <select class="form-control select2" style="width: 100%;" name="provincia" id="provinciaSelect">
                           <option value="" disabled selected>Selecione a Província</option>
                           @foreach ($provinces as $province)
-                          <option value="{{$province->nome}}">{{$province->nome}}</option>
+                          <option value="{{$province->province_id}}">{{$province->nome}}</option>
                           @endforeach
                         </select>
+
                       </div>
 
                     </div>
-
                     <div class="form-group">
                       <label for="distrito">Distrito</label>
                       <div class="input-group-append">
@@ -334,7 +335,9 @@
                         <select class="form-control select2" style="width: 100%;" name="distrito" id="distritoSelect">
                           <option value="" disabled selected>Selecione o distrito</option>
                           @foreach ($districts as $district)
-                          <option value="{{$district->nome}}">{{$district->nome}}</option>
+                          <option value="{{$district->id}}" data-provincia="{{$district->province_id}}">
+                            {{$district->nome}}
+                          </option>
                           @endforeach
                         </select>
                       </div>
@@ -401,11 +404,11 @@
                       <label for="provincia">Provincia </label>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="far fa-flag"></i></span>
-                        <select class="form-control select2" style="width: 100%;" name="resprovincia"
-                          id="resprovinciaSelect">
+                        <select class="form-control select2" style="width: 100%;" name="provincia"
+                          id="provinciaSelect2">
                           <option value="" disabled selected>Selecione a Província</option>
                           @foreach ($provinces as $province)
-                          <option value="{{$province->nome}}">{{$province->nome}}</option>
+                          <option value="{{$province->province_id}}">{{$province->nome}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -416,10 +419,12 @@
                       <label for="redistrito">Distrito</label>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="far fa-flag"></i></span>
-                        <select class="form-control select2" style="width: 100%;" name="redistrito" id="distritoSelect">
+                        <select class="form-control select2" style="width: 100%;" name="distrito" id="distritoSelect2">
                           <option value="" disabled selected>Selecione o distrito</option>
                           @foreach ($districts as $district)
-                          <option value="{{$district->nome}}">{{$district->nome}}</option>
+                          <option value="{{$district->id}}" data-provincia="{{$district->province_id}}">
+                            {{$district->nome}}
+                          </option>
                           @endforeach
                         </select>
                       </div>
@@ -529,7 +534,35 @@
   @stop
 
   @section('js')
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+  $(document).ready(function() {
+
+    $('#provinciaSelect').change(function() {
+      var selectedProvince = $(this).val();
+
+
+      $('#distritoSelect option').hide();
+
+
+      $('#distritoSelect option[data-provincia="' + selectedProvince + '"]').show();
+    });
+  });
+
+  $(document).ready(function() {
+
+    $('#provinciaSelect2').change(function() {
+      var selectedProvince = $(this).val();
+
+
+      $('#distritoSelect2 option').hide();
+
+
+      $('#distritoSelect2 option[data-provincia="' + selectedProvince + '"]').show();
+    });
+  });
+
+
   document.getElementById("data_nascimento").addEventListener("change", function() {
     var birthDate = new Date(this.value);
     var today = new Date();

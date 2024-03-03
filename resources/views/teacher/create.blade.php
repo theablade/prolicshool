@@ -304,7 +304,7 @@
                         <select class="form-control select2" style="width: 100%;" name="provincia" id="provinciaSelect">
                           <option value="" disabled selected>Selecione a Província</option>
                           @foreach ($provinces as $province)
-                          <option value="{{$province->nome}}">{{$province->nome}}</option>
+                          <option value="{{$province->province_id}}">{{$province->nome}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -318,7 +318,9 @@
                         <select class="form-control select2" style="width: 100%;" name="distrito" id="distritoSelect">
                           <option value="" disabled selected>Selecione o distrito</option>
                           @foreach ($districts as $district)
-                          <option value="{{$district->nome}}">{{$district->nome}}</option>
+                          <option value="{{$district->id}}" data-provincia="{{$district->province_id}}">
+                            {{$district->nome}}
+                          </option>
                           @endforeach
                         </select>
                       </div>
@@ -395,11 +397,10 @@
                       <label for="provincia">Provincia </label>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="far fa-flag"></i></span>
-                        <select class="form-control select2" style="width: 100%;" name="resprovincia"
-                          id="resprovinciaSelect">
+                        <select class="form-control select2" style="width: 100%;" name="provincia" id="provinciaSelect">
                           <option value="" disabled selected>Selecione a Província</option>
                           @foreach ($provinces as $province)
-                          <option value="{{$province->nome}}">{{$province->nome}}</option>
+                          <option value="{{$province->province_id}}">{{$province->nome}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -410,10 +411,12 @@
                       <label for="redistrito">Distrito </label>
                       <div class="input-group-append">
                         <span class="input-group-text"><i class="far fa-flag"></i></span>
-                        <select class="form-control select2" style="width: 100%;" name="redistrito" id="distritoSelect">
+                        <select class="form-control select2" style="width: 100%;" name="distrito" id="distritoSelect2">
                           <option value="" disabled selected>Selecione o distrito</option>
                           @foreach ($districts as $district)
-                          <option value="{{$district->nome}}">{{$district->nome}}</option>
+                          <option value="{{$district->id}}" data-provincia="{{$district->province_id}}">
+                            {{$district->nome}}
+                          </option>
                           @endforeach
                         </select>
                       </div>
@@ -516,7 +519,35 @@
   @stop
 
   @section('js')
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+  </script>
   <script>
+  $(document).ready(function() {
+
+    $('#provinciaSelect').change(function() {
+      var selectedProvince = $(this).val();
+
+
+      $('#distritoSelect option').hide();
+
+
+      $('#distritoSelect option[data-provincia="' + selectedProvince + '"]').show();
+    });
+  });
+
+  $(document).ready(function() {
+
+    $('#provinciaSelect2').change(function() {
+      var selectedProvince = $(this).val();
+
+
+      $('#distritoSelect2 option').hide();
+
+
+      $('#distritoSelect2 option[data-provincia="' + selectedProvince + '"]').show();
+    });
+  });
+
   document.getElementById("data_nascimento").addEventListener("change", function() {
     var birthDate = new Date(this.value);
     var today = new Date();
@@ -526,33 +557,32 @@
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-
     if (age <= 10) {
       document.getElementById("ageMessage").innerHTML = "O professor deve ter pelo menos 18 anos de idade!";
     } else {
       document.getElementById("ageMessage").innerHTML = "";
     }
   });
-
   var calculatedTypeDocument;
-
-  var emissao = document.getElementById('emissao');
+  var
+    emissao = document.getElementById('emissao');
   emissao.style.display = 'none'
 
   function calculateExpiryDate() {
-    var typeDocument = document.getElementById('tipodoc').value;
+    var
+      typeDocument = document.getElementById('tipodoc').value;
     var emissionDateInput = document.getElementById('data_emisao');
     var expiryDateInput = document.getElementById('data_validade');
     var emissao = document.getElementById('emissao');
-    var expiryMessage = document.getElementById('message');
+    var
+      expiryMessage = document.getElementById('message');
     if (typeDocument === 'bi') {
       emissao.style.display = 'block';
-      var emissionDate = new Date(emissionDateInput.value);
+      var
+        emissionDate = new Date(emissionDateInput.value);
       var expiryDate = new Date(emissionDate);
-
       expiryDate.setFullYear(expiryDate.getFullYear() + 5);
       expiryDate.setDate(expiryDate.getDate() - 1);
-
       expiryDateInput.min = emissionDateInput.value;
       var formattedExpiryDate = expiryDate.toISOString().split('T')[0];
       expiryDateInput.value = formattedExpiryDate;
@@ -564,26 +594,28 @@
   }
 
   function checkExpiryDate() {
-    var emissionDateInput = document.getElementById('data_emisao').value;
-    var expiryDateInput = document.getElementById('data_validade').value;
-    var expiryMessage = document.getElementById('message');
-
+    var
+      emissionDateInput = document.getElementById('data_emisao').value;
+    var
+      expiryDateInput = document.getElementById('data_validade').value;
+    var
+      expiryMessage = document.getElementById('message');
     if (emissionDateInput && expiryDateInput) {
-      var emissionDate = new Date(emissionDateInput);
+      var emissionDate = new
+      Date(emissionDateInput);
       var expiryDate = new Date(expiryDateInput);
       var today = new Date();
-      var differenceInYears = expiryDate.getFullYear() - emissionDate.getFullYear();
-
-      var minDifferenceYears = (calculatedTypeDocument === 'bi') ? 5 : 4; // 
-      if (differenceInYears < minDifferenceYears) {
-        expiryMessage.innerHTML =
-          "A data de validade deve ser pelo menos " + minDifferenceYears + " anos após a data de emissão!";
-      } else {
-        expiryMessage.innerHTML = "";
-      }
-      if (expiryDate < today) {
-        expiryMessage.innerHTML = "O documento expirou!";
-      }
+      var
+        differenceInYears = expiryDate.getFullYear() - emissionDate.getFullYear();
+      var
+        minDifferenceYears = (calculatedTypeDocument === 'bi') ? 5 : 4; // if (differenceInYears < minDifferenceYears) {
+      expiryMessage.innerHTML = "A data de validade deve ser pelo menos " + minDifferenceYears +
+        " anos após a data de emissão!";
+    } else {
+      expiryMessage.innerHTML = "";
+    }
+    if (expiryDate < today) {
+      expiryMessage.innerHTML = "O documento expirou!";
     }
   }
 
@@ -596,17 +628,13 @@
     };
     reader.readAsDataURL(event.target.files[0]);
   }
-
-
   document.addEventListener('DOMContentLoaded', function() {
-
     document.getElementById('previousBtn').disabled = true;
-
     var currentStep = 1;
     var totalSteps = 2;
 
-    function updateButtonVisibility() {
-
+    function
+    updateButtonVisibility() {
       if (currentStep === 1) {
         document.getElementById('previousBtn').disabled = true;
         document.querySelector('.progress-bar').style.width = '50%';
@@ -614,11 +642,9 @@
         document.getElementById('nextBtn').disabled = false;
       } else if (currentStep === totalSteps) {
         document.getElementById('previousBtn').disabled = false;
-
         document.getElementById('nextBtn').disabled = true;
         document.getElementById('progress').innerHTML = '100% (Concluido)'
         document.querySelector('.progress-bar').style.width = '100% ';
-
       } else {
         document.getElementById('previousBtn').disabled = false;
         document.getElementById('nextBtn').disabled = false;
@@ -626,22 +652,17 @@
       }
     }
 
-
     function nextStep() {
       currentStep++;
-
       updateButtonVisibility();
       updateStepDisplay();
     }
-
 
     function previousStep() {
       currentStep--;
-
       updateButtonVisibility();
       updateStepDisplay();
     }
-
 
     function updateStepDisplay() {
       var steps = document.querySelectorAll('#step');
@@ -653,12 +674,8 @@
         }
       });
     }
-
-
     document.getElementById('previousBtn').addEventListener('click', previousStep);
     document.getElementById('nextBtn').addEventListener('click', nextStep);
-
-
     updateButtonVisibility();
   });
   </script>

@@ -143,9 +143,9 @@
 
 <div class="row">
   <div class="col-md-6">
-    <div class="card">
-      <div class="card-header border-transparent">
-        <h3 class="card-title">Ultimos registos</h3>
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">Matriculas Anuais</h3>
         <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse">
             <i class="fas fa-minus"></i>
@@ -155,89 +155,52 @@
           </button>
         </div>
       </div>
-
-      <div class="card-body p-0" style="display: block;">
-        <div class="table-responsive">
-          <table class="table m-0">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Item</th>
-                <th>Status</th>
-                <th>Popularity</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                <td>Call of Duty IV</td>
-                <td><span class="badge badge-success">Shipped</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                <td>Samsung Smart TV</td>
-                <td><span class="badge badge-warning">Pending</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                <td>iPhone 6 Plus</td>
-                <td><span class="badge badge-danger">Delivered</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                <td>Samsung Smart TV</td>
-                <td><span class="badge badge-info">Processing</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                <td>Samsung Smart TV</td>
-                <td><span class="badge badge-warning">Pending</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                <td>iPhone 6 Plus</td>
-                <td><span class="badge badge-danger">Delivered</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                <td>Call of Duty IV</td>
-                <td><span class="badge badge-success">Shipped</span></td>
-                <td>
-                  <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="card-body">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand">
+            <div class=""></div>
+          </div>
+          <div class="chartjs-size-monitor-shrink">
+            <div class=""></div>
+          </div>
         </div>
-
+        <canvas id="donutChart2"
+          style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 420px;"
+          width="840" height="500" class="chartjs-render-monitor"></canvas>
       </div>
 
-      <div class="card-footer clearfix" style="display: block;">
-        <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+    </div>
+
+  </div>
+  <div class="col-md-6">
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">Matriculas por mês</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand">
+            <div class=""></div>
+          </div>
+          <div class="chartjs-size-monitor-shrink">
+            <div class=""></div>
+          </div>
+        </div>
+        <canvas id="myChart2"></canvas>
       </div>
 
     </div>
   </div>
 </div>
+
 
 @stop
 
@@ -265,18 +228,20 @@ $totalmonthys = '0';
 $quantidades = '0';
 $mesess = '0';
 
+$totalmonthys2 = '0';
+$quantidades2 = '0';
+$mesess2 = '0';
 $totalyears = [];
 $qyear = [];
 $yearsx = [];
 
-// Popule as variáveis com os dados do banco de dados
+
 foreach ($year as $key => $value) {
     $totalyears[] = $value->total;
     $qyear[] = $value->total / $value->qtyears;
     $yearsx[] = $value->years;
 }
 
-// Converta as variáveis em strings para uso no JavaScript
 if (!empty($totalyears)) {
     $totalYearsString = implode(', ', $totalyears);
 }
@@ -288,12 +253,68 @@ if (!empty($qyear)) {
 if (!empty($yearsx)) {
     $yearsxString = "'" . implode("', '", $yearsx) . "'";
 } else {
-    $yearsxString = '[]'; // Se não houver anos, defina como um array vazio
+    $yearsxString = '[]'; 
 }
 
-foreach ($monty as $key => $value) {
+
+foreach ($year2 as $key => $value) {
+    $totalyear[] = $value->total;
+    $qyear[] = $value->total / $value->qtyears;
+    $years2[] = $value->years;
+}
+
+if (!empty($totalyears)) {
+    $totalYearsString2 = implode(', ', $totalyears);
+}
+
+if (!empty($qyear)) {
+    $qYearString = implode(', ', $qyear);
+}
+
+if (!empty($years2)) {
+    $yearsxString2 = "'" . implode("', '", $years2) . "'";
+} else {
+    $yearsxString2 = '[]'; 
+}
+
+
+$totalmonthy = [];
+$quantidade = [];
+$meses = [];
+
+foreach ($monty as $value) {
     $totalmonthy[] = $value->total;
-    $quantidade[] = $value->total / $value->qtmonty;
+    $quantidade[] = $value->qtmonty > 0 ? $value->total / $value->qtmonty : 0;
+
+    $monthsArray = [
+        '1' => 'Jan',
+        '2' => 'Fev',
+        '3' => 'Mar',
+        '4' => 'Abr',
+        '5' => 'Mai',
+        '6' => 'Jun',
+        '7' => 'Jul',
+        '8' => 'Ago',
+        '9' => 'Set',
+        '10' => 'Out',
+        '11' => 'Nov',
+        '12' => 'Dez'
+    ];
+
+    $monthAbbreviation = $monthsArray[$value->meses] ?? '';
+
+    if ($monthAbbreviation !== '') {
+        $meses[] = $monthAbbreviation;
+    }
+}
+
+$totalmonthys = implode(', ', $totalmonthy);
+$quantidades = implode(', ', $quantidade);
+$mesess = "'" . implode("', '", $meses) . "'";
+
+foreach ($monty2 as $key => $value) {
+    $totalmonth[] = $value->total;
+    $quantidad[] = $value->total / $value->qtmontyEnroll;
 
 
     $monthsArray = [
@@ -312,30 +333,29 @@ foreach ($monty as $key => $value) {
     ];
 
 
-    $monthAbbreviation = $monthsArray[$value->meses] ?? '';
+    $monthAbbreviation = $monthsArray[$value->mesesenroll] ?? '';
 
     if ($monthAbbreviation !== '') {
-        $meses[] = $monthAbbreviation;
+        $meses1[] = $monthAbbreviation;
     }
 }
 
 
-if (!empty($totalmonthy)) {
-    $totalmonthys = implode(', ', $totalmonthy);
+if (!empty($totalmonth)) {
+    $totalmonthys2 = implode(', ', $totalmonth);
 }
 
-if (!empty($quantidade)) {
-    $quantidades = implode(', ', $quantidade);
+if (!empty($quantidad)) {
+    $quantidades2 = implode(', ', $quantidad);
 }
 
-if (!empty($meses)) {
-    $mesess = "'" . implode("', '", $meses) . "'";
+if (!empty($meses1)) {
+    $mesess2 = "'" . implode("', '", $meses1) . "'";
 }
-
 
 ?>
 
-// Obter o contexto do canvas
+
 var ctx1 = document.getElementById('donutChart').getContext('2d');
 
 
@@ -343,17 +363,25 @@ var dataDonut = {
   labels: [<?php echo $yearsxString; ?>],
   datasets: [{
     data: [<?php echo $totalYearsString; ?>],
-    backgroundColor: ['red', 'blue', 'yellow']
+    backgroundColor: ['blue', 'blue', 'yellow']
   }]
 };
 
-// Definir as opções do gráfico de rosca
 var optionsDonut = {
   responsive: false,
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          size: 16 // Defina o tamanho da fonte desejado aqui
+        }
+      }
+    }
+  }
 };
 
-// Criar o gráfico de rosca
+
 var myDoughnutChart = new Chart(ctx1, {
   type: 'doughnut',
   data: dataDonut,
@@ -361,28 +389,64 @@ var myDoughnutChart = new Chart(ctx1, {
 });
 
 
+var ctx2 = document.getElementById('donutChart2').getContext('2d');
 
-const ctx = document.getElementById('myChart').getContext('2d');
 
-// Crie o gráfico
-const myChart = new Chart(ctx, {
-  type: 'bar', // Defina o tipo de gráfico para barras
+var dataDonut = {
+  labels: [<?php echo $yearsxString2; ?>],
+  datasets: [{
+    data: [<?php echo $totalYearsString2; ?>],
+    backgroundColor: ['gray', 'blue', 'yellow']
+  }]
+};
+
+var optionsDonut = {
+  responsive: false,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      labels: {
+        font: {
+          size: 16
+        }
+      }
+    }
+  }
+};
+
+
+var myDoughnutChart = new Chart(ctx2, {
+  type: 'doughnut',
+  data: dataDonut,
+  options: optionsDonut
+});
+
+
+
+const bar = document.getElementById('myChart').getContext('2d');
+
+const myline = new Chart(bar, {
   data: {
-    labels: [<?php echo $mesess; ?>],
     datasets: [{
-      label: 'Valores',
+      type: 'bar',
+      label: 'TOTAL ',
       data: [<?php echo $totalmonthys; ?>],
       backgroundColor: [
         'rgba(54, 162, 235, 0.2)',
-
-
       ],
       borderColor: [
         'rgba(54, 162, 235, 1)',
-
       ],
       borderWidth: 1
-    }]
+    }, {
+      type: 'line',
+      label: 'MÉDIA ',
+      data: [<?php echo $quantidades; ?>],
+      backgroundColor: ['rgba(255, 99, 132, 0.2)', ],
+      borderColor: ['rgba(255, 99, 132, 1)', ],
+      borderWidth: 1
+    }],
+    labels: [<?php echo $mesess; ?>]
   },
   options: {
     scales: {
@@ -393,15 +457,38 @@ const myChart = new Chart(ctx, {
   }
 });
 
+const bar2 = document.getElementById('myChart2').getContext('2d');
 
-myChart.data.datasets.push({
-  label: 'Médias',
-  data: [<?php echo $quantidades; ?>],
-  type: 'line',
-  borderColor: ['rgba(255, 99, 132, 1)', ],
-  backgroundColor: ['rgba(255, 99, 132, 0.2)', ],
-  borderWidth: 2,
-  yAxisID: 'y1'
+const myline2 = new Chart(bar2, {
+  data: {
+    datasets: [{
+      type: 'bar',
+      label: 'TOTAL ',
+      data: [<?php echo $totalmonthys2; ?>],
+      backgroundColor: [
+        'rgba(54, 162, 235, 0.2)',
+      ],
+      borderColor: [
+        'rgba(54, 162, 235, 1)',
+      ],
+      borderWidth: 1
+    }, {
+      type: 'line',
+      label: 'MÉDIA ',
+      data: [<?php echo $quantidades2; ?>],
+      backgroundColor: ['rgba(255, 99, 132, 0.2)', ],
+      borderColor: ['rgba(255, 99, 132, 1)', ],
+      borderWidth: 1
+    }],
+    labels: [<?php echo $mesess2; ?>]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
 });
 </script>
 @stop

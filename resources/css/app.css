@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+.add-dowloand {
+    display: flex;
+    gap: 1rem;
+}

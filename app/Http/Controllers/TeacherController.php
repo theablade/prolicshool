@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Province;
 use App\Models\District;
 use App\Http\Requests\TeacherFormRequest;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 class TeacherController extends Controller
 {
     public function index(Request $request)
@@ -101,5 +104,29 @@ class TeacherController extends Controller
     }
 
 
+     public function PDFUser($parametro)
+{
+    if ($parametro) {
+         $teachers = Teacher::where("nome", "LIKE","%". $parametro ."%")
+         ->orWhere("genero","LIKE","%". $parametro ."%")
+         ->get();
+         
+
+	  		$pdf= FacadePdf::loadView('teachers.pdf', compact('teachers'));
+			$pdf->setPaper('A4','portrait');
+			return $pdf->stream('teacher.pdf');
+    }
+}
+
+	public function PDFLimpo()
+	{
+		 
+		$teachers = DB::table('teachers')->get();
+
+
+	  		$pdf= FacadePdf::loadView('teacher.pdf', compact('teachers'));
+			$pdf->setPaper('A4','portrait');
+			return $pdf->stream('teacher.pdf');
+	}
     
 }
