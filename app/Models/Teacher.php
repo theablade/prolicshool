@@ -32,7 +32,8 @@ class Teacher extends Model
          'resprovincia',
          'redistrito',
          'data_contratacao',
-         'numero_casa'
+         'numero_casa',
+         'formacao'
 
     
       
