@@ -24,7 +24,7 @@ public function index(Request $request)
         ->select('s.id','s.nome as student', 'c.nome as course')
            ->where('s.nome', 'LIKE', '%'.$var.'%')
             ->orWhere('c.nome', 'LIKE', '%'.$var.'%')
-        ->paginate(10);  
+        ->paginate(5);  
 
     
 

@@ -8,7 +8,8 @@
 @section('content')
 
 <head>
-
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <style>
   .success-message {
     background-color: #d4edda;
@@ -77,7 +78,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Curso</th>
-                    <th>Actions</th>
+                    <th>Accções</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -91,8 +92,10 @@
                     <td>{{ $monthlypayment->course }}</td>
                     </td>
                     <td>
-                      <a href="{{ route('monthlypayment.show', $monthlypayment->id) }}">Ver</a>
-                      <a href="{{ route('monthlypayment.edit', $monthlypayment->id) }}">Edit</a>
+                      <a href="{{ route('monthlypayment.show', $monthlypayment->id) }}"> <span
+                          class="btn btn-info material-symbols-outlined">
+                          visibility
+                        </span></a>
 
                     </td>
 
@@ -103,6 +106,33 @@
               </table>
 
             </div>
+          </div>
+          <div class="card-footer clearfix">
+            <ul class="pagination pagination-sm m-0 float-right">
+
+              @if ($monthlypayments->onFirstPage())
+              <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+              @else
+              <li class="page-item"><a class="page-link" href="{{ $monthlypayments->previousPageUrl() }}"
+                  rel="prev">&laquo;</a>
+              </li>
+              @endif
+
+
+              @for ($i = 1; $i <= $monthlypayments->lastPage(); $i++)
+                <li class="page-item {{ $i == $monthlypayments->currentPage() ? 'active' : '' }}"><a class="page-link"
+                    href="{{ $monthlypayments->url($i) }}">{{ $i }}</a></li>
+                @endfor
+
+
+                @if ($monthlypayments->hasMorePages())
+                <li class="page-item"><a class="page-link" href="{{ $monthlypayments->nextPageUrl() }}"
+                    rel="next">&raquo;</a>
+                </li>
+                @else
+                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                @endif
+            </ul>
           </div>
 
         </div>

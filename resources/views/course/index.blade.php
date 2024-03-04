@@ -5,6 +5,39 @@
 @section('content_header')
 @stop
 
+<head>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+  .success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+  }
+
+  .add-dowloand {
+    display: flex;
+    gap: 1rem;
+
+  }
+
+  .actions {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+
+
+  button {
+    background: none;
+    border: none;
+  }
+  </style>
+</head>
 @section('content')
 <br><br>
 <div class="container-fluid">
@@ -65,11 +98,9 @@
                   <th>ID</th>
                   <th>Nome</th>
                   <th>Descrição</th>
-                  <th>Preço da matricula</th>
-                  <th>Preço da mensalidade</th>
-                  <th>Duração</th>
-
-                  <th>Ação</th>
+                  <th>Matricula</th>
+                  <th>Mensalidade</th>
+                  <th>Acções</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,16 +111,37 @@
                   <td>{{ $course->descricao }}</td>
                   <td>{{ $course->price_enrollemnt }}</td>
                   <td>{{ $course->price_pfees }}</td>
-                  <td>{{ $course->duracao }}</td>
                   <td>
-                    <a href="{{ route('course.show', $course->id) }}">Ver</a>
-                    <a href="{{ route('course.edit', $course->id) }}">Edit</a>
-                    <form action="{{ route('course.destroy', $course ->id) }}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit"
-                        onclick="return confirm('Você tem certeza que apagar essa disciplina?')">Delete</button>
-                    </form>
+                    <div class="actions">
+                      <div>
+                        <a href="{{ route('course.show', $course->id) }}">
+                          <span class="btn btn-info material-symbols-outlined">
+                            visibility
+                          </span>
+                        </a>
+                      </div>
+                      <div>
+                        <a class="btn btn-success" href="{{ route('course.edit', $course->id) }}">
+                          <span class="material-symbols-outlined">
+                            edit
+                          </span>
+                        </a>
+                      </div>
+                      <div>
+                        <form action="{{ route('course.destroy', $course ->id) }}" method="POST">
+                          @csrf
+                          @method('DELETE')
+                          <button class="btn btn-danger" type="submit"
+                            onclick="return confirm('Você tem certeza quer apagar este Curso?')">
+                            <span class="material-symbols-outlined">
+                              delete
+                            </span></button>
+
+                        </form>
+                      </div>
+                    </div>
+
+
                   </td>
                 </tr>
                 @endforeach
@@ -150,7 +202,6 @@
 
 @section('js')
 <script>
-// Aguarda o evento de digitação no campo de pesquisa
 document.getElementById("searchInput").addEventListener("input", function() {
 
   var searchTerm = this.value.trim();

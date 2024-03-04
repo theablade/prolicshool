@@ -131,13 +131,13 @@
                           @csrf
                           @method('DELETE')
                           <button class="btn btn-danger" type="submit"
-                            onclick="return confirm('Are you sure you want to delete this discipline?')">
+                            onclick="return confirm('Você tem certeza quer apagar esta disciplina?')">
                             <span class="material-symbols-outlined">
                               delete
                             </span></button>
-                      </div>
 
-                      </form>
+                        </form>
+                      </div>
                     </div>
 
 

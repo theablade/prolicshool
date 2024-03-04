@@ -19,8 +19,6 @@
     border: 2px solid #ccc;
   }
 
-
-
   .input-img-preview img {
     width: 100%;
     height: 100%;
@@ -41,8 +39,8 @@
 <div class="container-fluid">
 
   @if(session('msg'))
-  <div class="row success-message"">
-    <p class=" msg">{{session('msg')}}</p>
+  <div class="row success-message">
+    <p class="msg">{{ session('msg') }}</p>
   </div>
   @endif
 
@@ -73,112 +71,99 @@
 
         <div class="card-body">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
 
               <div class="row">
 
 
                 <div class="col-md-4">
                   <label for="student_id">Nome do estudante</label>
-                  <p>
-
-                    {{$student->student}}
-                  </p>
+                  <p>{{ $student->student }}</p>
                 </div>
 
 
                 <div class="col-md-4">
                   <label for="student_id">Curso</label>
-                  <p>
-
-                    {{$student->course}}
-                  </p>
+                  <p>{{ $student->course }}</p>
                 </div>
 
                 <div class="col-md-4">
                   <label>Contacto</label>
-                  <p>
-
-                    {{$student->ntelefone}}
-                  </p>
-
+                  <p>{{ $student->ntelefone }}</p>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-12">
 
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-striped">
-                        <thead>
-                          <tr>
-                            <th>ID</th>
-                            <th>Valor</th>
-                            <th>Data de pagamento</th>
-                            <th>Data limite</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($monthys as $monthy)
-                          <tr>
-                            <td>{{ $monthy->id }}</td>
-                            <td setTimeout(function() { document.getElementById('success-message').style.display='none'
-                              ; }, 3000);>
-                              {{number_format($monthy->price_enrollemnt, 2, ',', '.' )}}</td>
+                <div class="col-md-12">
 
-                            <td>
-                              @if ($monthy->payment_date =='')
-                              dd/mm/aaaa
-                              @else
-                              {{date('d-m-Y', strtotime($monthy->payment_date))}}
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Valor</th>
+                              <th>Data de pagamento</th>
+                              <th>Data limite</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($monthys as $monthy)
+                            <tr>
+                              <td>{{ $monthy->id }}</td>
+                              <td>{{ number_format($monthy->price_enrollemnt, 2, ',', '.' ) }}</td>
+
+                              <td>
+                                @if ($monthy->payment_date == '')
+                                dd/mm/aaaa
+                                @else
+                                {{ date('d-m-Y', strtotime($monthy->payment_date)) }}
+                                @endif
+                              </td>
+
+                              <td>{{ date('d-m-Y', strtotime($monthy->endDate)) }}</td>
+                              <td>
+                                @if($monthy->payment_status == "Pago")
+                                <span class="badge badge-success p-2">{{ $monthy->payment_status }}</span>
+                                @elseif($monthy->payment_status == "Pendente")
+                                <span class="badge badge-danger p-2">{{ $monthy->payment_status }}</span>
+                                @else
+
+                                @endif
+                              </td>
+                              <td>
+                                @if($monthy->payment_status == "Pago")
+
+                                <form action="{{ route('monthlypayment.destroy', $monthy->id) }}" method="POST">
+                                  @csrf
+                                  @method('delete')
+                                  <button class="btn btn-danger btn-sm" type="submit"
+                                    onclick="return confirm('Are you sure you want to delete this monthlypayment?')">Cancelar</button>
+                                </form>
+                                @elseif($monthy->payment_status == "Pendente")
+                                <form action="{{ route('monthlypayment.update', $monthy->id) }}" method="POST">
+                                  @csrf
+                                  @method('PUT')
+                                  <button class="btn btn-success btn-sm" type="submit"
+                                    onclick="return confirm('Are you sure you want to delete this monthlypayment?')">Pagar</button>
+                                </form>
+                              </td>
                               @endif
-                            </td>
 
 
-                            <td> {{date('d-m-Y', strtotime($monthy->endDate))}}</td>
-                            <td>
-                              @if($monthy->payment_status =="Pago")
-                              <span class="badge badge-success p-2">
-                                {{ $monthy->payment_status }}
-                              </span>
-                              @elseif($monthy->payment_status =="Pendente")
-                              <span class="badge badge-danger p-2">
-                                {{ $monthy->payment_status }}
-                              </span>
-                              @else
-
-                              @endif
-                            </td>
-                            <td>
-                              @if($monthy->payment_status =="Pago")
-
-                              <form action="{{ route('monthlypayment.destroy', $monthy ->id) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger btn-sm" type="submit"
-                                  onclick="return confirm('Are you sure you want to delete this monthlypayment?')">Cancelar</button>
-                              </form>
-                              @elseif($monthy->payment_status =="Pendente")
-                              <form action="{{ route('monthlypayment.update', $monthy ->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button class="btn btn-success btn-sm" type="submit"
-                                  onclick="return confirm('Are you sure you want to delete this monthlypayment?')">Pagar</button>
-                              </form>
-                            </td>
-                            @endif
-
-
-                          </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-
-
                   </div>
+
+
+
+
                 </div>
 
 
@@ -211,7 +196,6 @@
             }
           });
           $('#selectCourse').change(showprices);
-
 
           function showprices() {
             var prices = document.getElementById('selectCourse').value.split('_');
@@ -290,7 +274,6 @@
               }
             }
           }
-
 
           function previewImage(event) {
             var reader = new FileReader();
