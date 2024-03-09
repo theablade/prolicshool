@@ -30,10 +30,6 @@ Route::get('/', function () {
 
 
 
-
-
-
-
 Route::middleware(['can:accessAdmin, App\Models\Admin'])->group(function () {
    Route::get('/resgistro', function () {
 
@@ -48,14 +44,21 @@ Route::resource('district',DistrictController::class);
 Route::resource('enrollment',EnrollmentController::class);
 Route::resource('monthlypayment',MonthlyPaymentController::class);
 Route::resource('dashboard',DashboardController::class);
-
-Route::resource('student', StudentController::class);
-});
-
 Route::get('student.pdf', [StudentController::class, 'PDFLimpo'])->name('students.pdf');
+Route::get('monthypayments.pdf', [MonthlyPaymentController::class, 'PDFLimpo'])->name('monthypayments.pdf');
+Route::get('enrollments.pdf', [EnrollmentController::class, 'PDFLimpo'])->name('enrollments.pdf');
+Route::get('enrollment.pdf/{parametro}', [EnrollmentController::class, 'PDFUser'])->name('enrollment.pdf');
+Route::get('enrollment.pdfr/{parametro}', [EnrollmentController::class, 'ReciboUser'])->name('enrollment.pdfr');
+
+Route::get('monthypayment.pdf/{parametro}', [MonthlyPaymentController::class, 'PDFUser'])->name('monthypayment.pdf');
 Route::get('student.pdf/{parametro}', [StudentController::class, 'PDFUser'])->name('studentx.pdf');
 
 Route::get('teacher.pdf', [TeacherController::class, 'PDFLimpo'])->name('teacher.pdf');
 Route::get('teacher.pdf/{parametro}', [TeacherController::class, 'PDFUser'])->name('teacherx.pdf');
+
+
+Route::resource('student', StudentController::class);
+});
+
 
 Auth::routes();

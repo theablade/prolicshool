@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\MonthlyPayment;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Validation\Rule;
 
 class EnrollmentController extends Controller
@@ -153,6 +154,68 @@ class EnrollmentController extends Controller
       ->with('success','Matricula '.$enrollmentStatus->status);
        
     }
+
+
+  public function PDFLimpo()
+{
+
+
+         $enrollments = DB::table('enrollment as e') 
+            ->join('students as s', 'e.student_id', '=', 's.id'  )
+            ->join('courses as c', 'e.course_id', '=', 'c.id')
+            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 'number_doc', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+        
+            ->get();
+
+
+    $pdf = FacadePdf::loadView('enrollment.pdf', compact('enrollments'));
+    $pdf->setPaper('A4', 'portrait');
+    return $pdf->stream('enrollments.pdf');
+}
+
+public function PDFUser($parametro)
+{
+    if ($parametro) {
+      
+        $primeirasTresLetras = substr($parametro, 0, 3);
+
+      
+        $enrollments = DB::table('enrollment as e')
+            ->join('students as s', 'e.student_id', '=', 's.id')
+            ->join('courses as c', 'e.course_id', '=', 'c.id')
+            ->select('e.id', 'e.status', 'e.status', 'type_payment', 's.nome as student', 's.ntelefone', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+            ->where('s.nome', 'LIKE', $primeirasTresLetras . '%')
+            ->get();
+
+      
+        if ($enrollments->isEmpty()) {
+            return "Nenhuma matrícula encontrada para os estudantes com as três primeiras letras do nome fornecido.";
+        }
+
+      
+        $pdf = FacadePdf::loadView('enrollment.pdf', compact('enrollments'));
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('enrollment.pdf');
+    }
+}
+
+public function ReciboUser(String $id)
+{
+    $enrollments = DB::table('enrollment as e') 
+            ->join('students as s', 'e.student_id', '=', 's.id'  )
+            ->join('courses as c', 'e.course_id', '=', 'c.id')
+            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+            ->where('e.student_id', '=', $id)
+            ->get();
+
+         $pdf = FacadePdf::loadView('enrollment.pdfr', compact('enrollments'));
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream('enrollment.pdf');
+
+     
+}
+
+
 
     
 }

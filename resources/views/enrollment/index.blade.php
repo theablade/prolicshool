@@ -77,11 +77,32 @@
     </div>
     <div class="card-body">
       <div class="row">
+
         <div class="col-md-6 col-sm-6">
-          <a href="{{ route('enrollment.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-book-reader"></i> +
-          </a>
+          <div class="row">
+            <a href="{{ route('enrollment.create') }}" class="btn btn-primary mb-3">
+              <i class="fas fa-book-reader"></i> +
+            </a>
+            <div class="col-md-2">
+
+              @if ($searchresult)
+              <a href="{{ route('enrollment.pdf', ['parametro' => $searchresult]) }}" target="_blank"><span
+                  class="btn btn-secondary mb-3 material-symbols-outlined">
+                  picture_as_pdf
+                </span></a>
+              @else
+              <a href="{{ route('enrollments.pdf') }}" target="_blank"><span
+                  class="btn btn-secondary mb-3 material-symbols-outlined">
+                  picture_as_pdf
+                </span></a>
+              @endif
+
+
+            </div>
+          </div>
+
         </div>
+
         <div class="col-md-6 col-sm-6">
           <form action="{{ route('enrollment.index') }}">
             <div class="input-group">
@@ -146,6 +167,11 @@
                             <span class="btn btn-info material-symbols-outlined">
                               visibility
                             </span>
+                          </a>
+                        </div>
+                        <div>
+                          <a href="{{ route('enrollment.pdfr', $enrollment->student_id) }}">
+                            Recibo
                           </a>
                         </div>
                         <form action="{{ route('enrollment.destroy', $enrollment ->id) }}" method="POST">

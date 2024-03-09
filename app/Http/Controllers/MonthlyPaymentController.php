@@ -7,7 +7,7 @@ use App\Models\Courses;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 class MonthlyPaymentController extends Controller
 {
     /**
@@ -150,4 +150,37 @@ public function index(Request $request)
        $monthlypayment->update();
          return redirect()->back()->with('msg', 'A mensalidade  do mês de '. $monthName. ' Foi cancelada');
     }
+
+   public function PDFLimpo()
+{
+    $monthlypayments = DB::table('monthly_payment as mp')
+        ->join('students as s', 'mp.student_id', '=', 's.id')
+        ->join('courses as c', 'mp.course_id', '=', 'c.id')
+        ->select('s.nome as student', 'c.nome as course', 'mp.*')
+        ->get();
+
+    $pdf = FacadePdf::loadView('monthlypayment.pdf', compact('monthlypayments'));
+    $pdf->setPaper('A4', 'portrait');
+    return $pdf->stream('monthypayment.pdf');
+}
+
+
+public function PDFUser($parametro)
+{
+    if ($parametro) {
+        
+
+         $monthlypayments = MonthlyPayment::where("student_id", "LIKE","%". $parametro ."%")
+      
+         ->get();
+         
+      
+        
+        $pdf = FacadePdf::loadView('monthlypayment.pdf', compact('monthlypayments'));
+        $pdf->setPaper('A4','portrait');
+        return $pdf->stream('monthypayment.pdf');
+    }
+}
+
+
 }

@@ -76,12 +76,13 @@
           </a>
           <div class="col-md-2 col-sm-6">
             @if ($searchresult)
-            <a href="{{ route('student.pdf', ['parametro' => $searchresult]) }}"><span
+            <a href="{{ route('student.pdf', ['parametro' => $searchresult]) }}" target="_blank"><span
                 class="btn btn-secondary mb-3 material-symbols-outlined">
                 picture_as_pdf
               </span></a>
             @else
-            <a href="{{ route('students.pdf') }}"><span class="btn btn-secondary mb-3 material-symbols-outlined">
+            <a href="{{ route('students.pdf') }}" target="_blank"><span
+                class="btn btn-secondary mb-3 material-symbols-outlined">
                 picture_as_pdf
               </span></a>
             @endif

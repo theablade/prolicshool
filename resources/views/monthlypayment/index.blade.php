@@ -51,6 +51,21 @@
     </div>
     <div class="card-body">
       <div class="row">
+        <div class="col-md-5">
+
+          @if ($searchresult)
+          <a href="{{ route('monthypayment.pdf', ['parametro' => $searchresult]) }}"><span
+              class="btn btn-secondary mb-3 material-symbols-outlined">
+              picture_as_pdf
+            </span></a>
+          @else
+          <a href="{{ route('monthypayments.pdf') }}"><span class="btn btn-secondary mb-3 material-symbols-outlined">
+              picture_as_pdf
+            </span></a>
+          @endif
+
+
+        </div>
 
         <div class="col-md-6 col-sm-6">
           <form action="{{ route('monthlypayment.index') }}">
