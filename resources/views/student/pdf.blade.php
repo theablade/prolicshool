@@ -75,7 +75,7 @@
 
 
    .tabela {
-     margin-top: 16rem;
+     margin-top: 8rem;
    }
 
    .titulo {

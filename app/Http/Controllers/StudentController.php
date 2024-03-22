@@ -120,7 +120,7 @@ class StudentController extends Controller
 	public function PDFLimpo()
 	{
 		 
-		$students = Student::all();
+		    $students = Student::all();
 
 
 	  		$pdf= FacadePdf::loadView('student.pdf', compact('students'));

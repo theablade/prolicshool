@@ -13,7 +13,7 @@
   }
   </style>
 </head>
-<h1>Admin Dashboard</h1>
+<h1>User Dashboard</h1>
 @stop
 
 @section('content')
@@ -21,8 +21,6 @@
   <div class="col-lg-3 col-6">
     <div class="small-box bg-info">
       <div class="inner">
-        <h3>{{ number_format($yearsenrollment->total, 2, ',', '.') }}Mts</h3>
-
         <p>Mensalidades Ano</p>
       </div>
       <div class="icon">
@@ -37,7 +35,7 @@
       <div class="inner">
 
 
-        <h3>{{ number_format($montlyenrollment->total, 2, ',', '.') }}Mts</h3>
+
 
         <p>Mensalidades Mês</p>
       </div>
@@ -52,7 +50,7 @@
 
     <div class="small-box bg-warning">
       <div class="inner">
-        <h3>{{ number_format($yearEnrollment->total, 2, ',', '.') }}Mts</h3>
+
         <p>Matriculas Ano</p>
       </div>
       <div class="icon">
@@ -66,7 +64,7 @@
 
     <div class="small-box bg-danger">
       <div class="inner">
-        <h3>{{ number_format($montlyEnrollment->total, 2, ',', '.') }}Mts</h3>
+
 
         <p>Matriculas Mês</p>
       </div>

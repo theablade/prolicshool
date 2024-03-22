@@ -163,7 +163,7 @@ class EnrollmentController extends Controller
          $enrollments = DB::table('enrollment as e') 
             ->join('students as s', 'e.student_id', '=', 's.id'  )
             ->join('courses as c', 'e.course_id', '=', 'c.id')
-            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 'number_doc', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 's.number_doc', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
         
             ->get();
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -25,7 +25,22 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+
+     
+
+  protected function authenticated(Request $request, $user)
+    {
+        $request->session()->put('role', $user->role);
+
+        // Redirecionar com base no papel do usuário
+        if ($user->role === 'Admin') {
+            $this->redirectTo = '/dashboard';
+        } elseif ($user->role === 'User') {
+            $this->redirectTo = '/Userdashboard';
+        }
+    }
+    
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.

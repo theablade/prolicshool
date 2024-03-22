@@ -171,7 +171,7 @@
                         </div>
                         <div>
                           <a href="{{ route('enrollment.pdfr', $enrollment->student_id) }}">
-                            Recibo
+                            Fatura
                           </a>
                         </div>
                         <form action="{{ route('enrollment.destroy', $enrollment ->id) }}" method="POST">
