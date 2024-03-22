@@ -16,6 +16,25 @@
     color: #007bff;
   }
 
+  .img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    height: 100%;
+
+  }
+
+  .imgs {
+    text-align: center;
+  }
+
+  #preview {
+    clip-path: circle();
+  }
+
   .flex-group {
     display: flex;
     justify-content: space-between;
@@ -31,8 +50,26 @@
 
 <div class="card">
   <div class="row">
+    <div class="col-md-3">
+      <div class="card-body">
 
-    <div class="col-md-9">
+        <div class="row imgs">
+          <div class="img" style="display: flex; justify-content: center; align-items: center;">
+            <img id="preview" src="{{ old('img') ? asset(old('img')) : asset('storage/img/'.$student->img) }}"
+              class="img-fluid img-thumbnail preview-image" onclick="openPopup(this.src);">
+            <div class="info">
+
+              <p>{{ $student->nome }}</p>
+              <smal>{{ $student->email }}</smal>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
 
 
       <div class="card-body">
@@ -80,11 +117,11 @@
         <div class=" flex-group">
           <div>
             Natural de
-            <p class="subtitle"> {{ $student->provincia }}</p>
+            <p class="subtitle"> {{ $province->nome }}</p>
           </div>
           <div class="horario">
             Distrito
-            <p class="subtitle"> {{ $student->distrito }}</p>
+            <p class="subtitle"> {{ $district->nome }}</p>
           </div>
 
         </div>
@@ -115,23 +152,14 @@
 
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="card-body">
 
-        <div class="row">
-          <div class="img">
-
-            <img src="" alt="" width="100px" height="100px">
-          </div>
-          <div class="info">
-
-            <p>{{ $student->nome }}</p>
-            <smal>{{ $student->email }}</smal>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
 </div>
 @stop
+
+<script>
+function openPopup(imageSrc) {
+  window.open(imageSrc, 'popup', 'width=600,height=400');
+}
+</script>

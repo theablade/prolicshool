@@ -37,6 +37,7 @@ class StudentController extends Controller
          $currentDateTime = Carbon::now();
         $provinces = Province::all();
         $districts = District::all();
+        
         return view("student.create", compact('provinces', 'districts', 'currentDateTime'));
     }
 
@@ -45,9 +46,17 @@ class StudentController extends Controller
     {
        $student = new Student;
 
+            $imageName = null;
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+            $newFileName = $file->hashName(); 
+            $file->storeAs('img', $newFileName, 'public');
+            $imageName = $newFileName;
+        }
     
+        $student->fill($request->all());
+        $student['img'] = $imageName;
 
-    $student->fill($request->all());
 
    
     $student->save();
@@ -59,10 +68,23 @@ class StudentController extends Controller
 
     public function show($id)
     {
+
+      
+
+
         $student = Student::findOrFail($id);
+
+        $province = DB::table('provinces')
+        ->where('province_id','=',$student->provincia )
+        ->first();
         
+      $district = DB::table('districts')
+        ->where('id','=',$student->distrito )
+        ->first();
+
+
         
-        return view('student.show', ['student' => $student]);
+        return view('student.show', ['student' => $student, 'province'=>$province, 'district'=>$district]);
     }
 
 

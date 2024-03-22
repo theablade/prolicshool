@@ -68,29 +68,13 @@
               class="fas fa-fw fa-book"></i>+</a>
 
         </div>
-        <div class="col-md-6 col-sm-6">
-          <form action="{{ route('discipline.index') }}">
-            <div class="input-group">
-              <input type="search" id="searchInput" value="{{$searchdiscipline}}" class="form-control form-control-md"
-                placeholder="Pesquisar..." name="searchdiscipline">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-md btn-default">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+
       </div>
 
       <section class="content">
         <div class="card">
           <div class="card-body">
-            @if ($disciplines->isEmpty())
-            <div class="alert alert-info">
-              Nenhum resultado encontrado para: {{ $searchdiscipline }}
-            </div>
-            @else
+
             <table id="students" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -148,7 +132,7 @@
                 @endforeach
               </tbody>
             </table>
-            @endif
+
           </div>
         </div>
         <div class="card-footer clearfix">

@@ -236,6 +236,9 @@ $mesess2 = '0';
 $totalyears = [];
 $qyear = [];
 $yearsx = [];
+ $yearsxString ='';
+ $totalYearsString ='';
+$totalYearsString2 ='';
 
 
 foreach ($year as $key => $value) {
