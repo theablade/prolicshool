@@ -21,6 +21,7 @@ class DashboardController extends Controller
         $ano = date('Y', strtotime($mytime));
         
 
+   
 
         $monty = DB::table('monthly_payment')
          ->select(DB::raw('sum(price_enrollemnt) as total'),  DB::raw('count(id) as qtmonty'), DB::raw('Month(payment_date) as meses'))
@@ -77,7 +78,7 @@ class DashboardController extends Controller
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2'));
+        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2', ));
     }
 
     

@@ -310,16 +310,28 @@ return [
         [
             'text' => 'Dashboard',
             'url'=> 'dashboard',
+            'can'=>'access',
             'icon' => 'fas fa-tachometer-alt'  
         ],
+
+        [
+            'text' => 'Dashboard',
+            'url'=> 'Userdashboard',
+             'can'=>'accessUser',
+            'icon' => 'fas fa-tachometer-alt'  
+        ],
+
+        
         ['header' => 'MENU'],
         [
             'text'    => 'Usuarios',
+         
             'icon'    => 'fas fa-fw fa-users',
             'submenu' => [
                 [
                     'text' => 'Usuario',
                     'url'  => 'resgistro',
+                        'can'=>'access',
                     'icon'    => 'fas fa-fw fa-user',
                     'active'  => ['usuario', 'usuario*', 'regex:@^content/[0-9]+$@']
                 ],
@@ -360,6 +372,7 @@ return [
             ],
         ],
 
+    
                [
             'text'    => 'Financas',
             'icon'    => 'fas fa-chart-line',

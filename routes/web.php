@@ -30,9 +30,12 @@ Route::get('/', function () {
 });
 
 
-Route::resource('dashboard',DashboardController::class);
-Route::resource('teacher',TeacherController::class);
-Route::resource('Userdashboard',UserDashboardController::class);
+
+
+
+
+
+    Route::middleware(['can:access'])->group(function (){
 
 
  Route::get('/resgistro', function () {
@@ -40,7 +43,11 @@ Route::resource('Userdashboard',UserDashboardController::class);
         return view('auth.register');
         
     });
+    Route::resource('dashboard',DashboardController::class);
+    });
 
+    Route::resource('teacher',TeacherController::class);
+    Route::resource('Userdashboard',UserDashboardController::class);
     Route::resource('student', StudentController::class);
     Route::resource('course', CoursesController::class);
     Route::resource('discipline', DisciplineController::class);

@@ -8,28 +8,27 @@
 @section('content')
 <br><br>
 <div class="container-fluid">
-  <!-- Adicione a classe mt-4 aqui -->
+
   <div class="card w-100 h-100">
     <div class="card-header">
       <h3 class="card-title">Lista de discilinas</h3>
       <div class="card-tools">
-        <!-- Botão Fechar -->
         <button type="button" class="btn btn-tool" data-card-widget="remove">
           <i class="fas fa-times"></i>
         </button>
-        <!-- Botão Minimizar -->
+
         <button type="button" class="btn btn-tool" data-card-widget="collapse">
           <i class="fas fa-minus"></i>
         </button>
-        <!-- Botão Maximizar -->
+
         <button type="button" class="btn btn-tool" data-card-widget="maximize">
           <i class="fas fa-expand"></i>
         </button>
       </div>
     </div>
-    <!-- /.card-header -->
+
     <div class="card-body">
-      <!-- Adicione o botão de adicionar novo estudante aqui -->
+
 
       <div class="row">
         <div class="col-md-6 col-sm-6">

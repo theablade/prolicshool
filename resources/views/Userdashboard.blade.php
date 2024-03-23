@@ -37,6 +37,7 @@
 
 
 
+
         <p>Mensalidades Mês</p>
       </div>
       <div class="icon">
@@ -65,7 +66,7 @@
     <div class="small-box bg-danger">
       <div class="inner">
 
-
+        {{$totalMont[0]->qtmonty}}
         <p>Matriculas Mês</p>
       </div>
       <div class="icon">
@@ -235,6 +236,8 @@ $totalyears = [];
 $qyear = [];
 $yearsx = [];
 
+$totalYearsString ='';
+ $totalYearsString2 = '';
 
 foreach ($year as $key => $value) {
     $totalyears[] = $value->total;

@@ -16,11 +16,30 @@ class UserDashboardController extends Controller
     public function index()
     {
 
+     $user = auth()->user();
+      if ($user->role === 'admin') {
+        return view('dashboard');
+    }
         $mytime      = Carbon::now('Africa/Maputo');
         $mes = date('m', strtotime($mytime));
         $ano = date('Y', strtotime($mytime));
         
 
+   
+      
+  $ano = date('Y'); 
+$totalMont = DB::table('enrollment')
+    ->select(DB::raw('count(id) as qtmonty'))
+    ->whereYear('enrollment_date', $ano)
+    ->get();
+
+
+
+
+    $totalenrollment = DB::table('monthly_payment')
+    ->select(DB::raw('sum(price_enrollemnt) as total'))
+    ->whereYear('payment_date', $ano)
+    ->first();
 
         $monty = DB::table('monthly_payment')
          ->select(DB::raw('sum(price_enrollemnt) as total'),  DB::raw('count(id) as qtmonty'), DB::raw('Month(payment_date) as meses'))
@@ -77,7 +96,7 @@ class UserDashboardController extends Controller
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        return view('Userdashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2'));
+        return view('Userdashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2', 'totalMont'));
     }
 
     
