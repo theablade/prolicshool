@@ -29,7 +29,20 @@
 
   .actions {
     display: flex;
-    justify-content: space-evenly;
+    gap: 1rem;
+  }
+
+  .actions .recibo {
+    display: block;
+    height: 2.4rem;
+  }
+
+  .cancel {
+    height: 2.4rem;
+  }
+
+  .activar {
+    height: 2.3rem;
   }
 
 
@@ -170,19 +183,29 @@
                           </a>
                         </div>
                         <div>
-                          <a href="{{ route('enrollment.pdfr', $enrollment->student_id) }}">
-                            Fatura
+                          <a href="{{ route('enrollment.pdfr', $enrollment->student_id) }}"
+                            class="btn btn-secondary recibo">
+                            <span class="material-symbols-outlined">
+                              receipt_long
+                            </span>
                           </a>
                         </div>
                         <form action="{{ route('enrollment.destroy', $enrollment ->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
                           @if($enrollment->status =="Activo")
-                          <button type="submit" class="btn btn-danger"
-                            onclick="return confirm('Você deseja cancelar a matricula?')">Cancelar</button>
+                          <button type="submit" class="btn btn-danger cancel"
+                            onclick="return confirm('Você deseja cancelar a matricula?')">
+                            <span class="material-symbols-outlined">
+                              cancel
+                            </span>
+                          </button>
                           @elseif($enrollment->status =="Cancelada")
-                          <button type="submit" class="btn btn-success"
-                            onclick="return confirm('Você deseja Activar a matricula?')">Activar</button>
+                          <button type="submit" class="btn btn-success activar"
+                            onclick="return confirm('Você deseja Activar a matricula?')"><span
+                              class="material-symbols-outlined">
+                              task_alt
+                            </span></button>
                           @else
                           <button type="submit"
                             onclick="return confirm('Você deseja Activar a matricula?')">Activar</button>

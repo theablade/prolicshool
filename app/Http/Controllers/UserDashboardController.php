@@ -27,14 +27,29 @@ class UserDashboardController extends Controller
 
    
       
-  $ano = date('Y'); 
-$totalMont = DB::table('enrollment')
-    ->select(DB::raw('count(id) as qtmonty'))
+
+ $totalMont = DB::table('enrollment')
+    ->select(DB::raw('COUNT(id) as qtmonty'), DB::raw('MONTH(enrollment_date) as mes'))
     ->whereYear('enrollment_date', $ano)
+    ->groupBy(DB::raw('MONTH(enrollment_date)'))
     ->get();
 
+$totalMatriculasAnuais = DB::table('enrollment')
+    ->select(DB::raw('COUNT(id) as totalMatriculas'))
+    ->whereYear('enrollment_date', $ano)
+    ->first();
 
 
+     $totalMonthy = DB::table('monthly_payment')
+    ->select(DB::raw('COUNT(id) as mensalidades'), DB::raw('MONTH(payment_date) as mes'))
+    ->whereYear('payment_date', $ano)
+    ->groupBy(DB::raw('MONTH(payment_date)'))
+    ->get();
+
+    $totalMensalidadesAnuais = DB::table('monthly_payment')
+    ->select(DB::raw('COUNT(id) as totalMensalidades'))
+    ->whereYear('payment_date', $ano)
+    ->first();
 
     $totalenrollment = DB::table('monthly_payment')
     ->select(DB::raw('sum(price_enrollemnt) as total'))
@@ -96,7 +111,7 @@ $totalMont = DB::table('enrollment')
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        return view('Userdashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2', 'totalMont'));
+        return view('Userdashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2', 'totalMont', 'totalMatriculasAnuais', 'totalMonthy', 'totalMensalidadesAnuais'));
     }
 
     

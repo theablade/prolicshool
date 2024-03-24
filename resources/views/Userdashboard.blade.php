@@ -21,6 +21,7 @@
   <div class="col-lg-3 col-6">
     <div class="small-box bg-info">
       <div class="inner">
+        {{ $totalMensalidadesAnuais->totalMensalidades }}
         <p>Mensalidades Ano</p>
       </div>
       <div class="icon">
@@ -36,7 +37,7 @@
 
 
 
-
+        {{ $totalMonthy[0]->mensalidades }}
 
         <p>Mensalidades Mês</p>
       </div>
@@ -52,6 +53,7 @@
     <div class="small-box bg-warning">
       <div class="inner">
 
+        {{ $totalMatriculasAnuais->totalMatriculas }}
         <p>Matriculas Ano</p>
       </div>
       <div class="icon">
@@ -66,7 +68,7 @@
     <div class="small-box bg-danger">
       <div class="inner">
 
-        {{$totalMont[0]->qtmonty}}
+        {{ $totalMont[0]->qtmonty }}
         <p>Matriculas Mês</p>
       </div>
       <div class="icon">
@@ -111,38 +113,7 @@
 
   </div>
 
-  <div class="col-md-6">
-    <div class="card card-info">
-      <div class="card-header">
-        <h3 class="card-title">Mensalidades</h3>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="chartjs-size-monitor">
-          <div class="chartjs-size-monitor-expand">
-            <div class=""></div>
-          </div>
-          <div class="chartjs-size-monitor-shrink">
-            <div class=""></div>
-          </div>
-        </div>
-        <canvas id="myChart"></canvas>
-      </div>
 
-    </div>
-
-  </div>
-
-</div>
-
-<div class="row">
   <div class="col-md-6">
     <div class="card card-info">
       <div class="card-header">
@@ -173,34 +144,9 @@
     </div>
 
   </div>
-  <div class="col-md-6">
-    <div class="card card-info">
-      <div class="card-header">
-        <h3 class="card-title">Matriculas por mês</h3>
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-          <button type="button" class="btn btn-tool" data-card-widget="remove">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="chartjs-size-monitor">
-          <div class="chartjs-size-monitor-expand">
-            <div class=""></div>
-          </div>
-          <div class="chartjs-size-monitor-shrink">
-            <div class=""></div>
-          </div>
-        </div>
-        <canvas id="myChart2"></canvas>
-      </div>
-
-    </div>
-  </div>
 </div>
+
+
 
 
 @stop

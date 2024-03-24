@@ -155,10 +155,9 @@ class EnrollmentController extends Controller
          $enrollments = DB::table('enrollment as e') 
             ->join('students as s', 'e.student_id', '=', 's.id'  )
             ->join('courses as c', 'e.course_id', '=', 'c.id')
-            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 's.number_doc', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 's.numerodoc', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
         
             ->get();
-
 
     $pdf = FacadePdf::loadView('enrollment.pdf', compact('enrollments'));
     $pdf->setPaper('A4', 'portrait');
@@ -196,7 +195,7 @@ public function ReciboUser(String $id)
     $enrollments = DB::table('enrollment as e') 
             ->join('students as s', 'e.student_id', '=', 's.id'  )
             ->join('courses as c', 'e.course_id', '=', 'c.id')
-            ->select('e.id', 'e.status', 'e.status', 's.nome as student', 's.ntelefone', 'type_payment', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
+            ->select('e.id', 'e.status', 'e.status', 's.bairro','s.avenida', 's.nome as student', 's.ntelefone', 'type_payment', 'c.nome as course', 'c.price_enrollemnt', 'c.price_subscrab')
             ->where('e.student_id', '=', $id)
             ->get();
 

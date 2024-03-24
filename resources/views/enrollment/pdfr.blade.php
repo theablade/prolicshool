@@ -9,6 +9,10 @@
     width: 100%;
   }
 
+  tr {
+    padding: 2rem;
+  }
+
   th,
   td {
     border-bottom: 1px solid #ccc;
@@ -16,6 +20,7 @@
     border-right: 0px;
     border-left: 0px;
     text-align: left;
+    padding: .5rem;
   }
 
   #tab {
@@ -116,31 +121,29 @@
   <h3> == ==</h3>
 
   <figure>
-
+    <h1 style="margin-left: 1rem;">Fatura</h1>
   </figure>
 
-  <hr style="border: .2px solid;">
-  <div id="vd">
-    <h3>Nº: </h3>
-  </div>
+
+
   <div id="inf">
     <p></p>
     <p>Morada: </p>
     <p>Telefone: Fax:</p>
     <p>NUIT:</p>
-    <p>E_mail: }</p>
+    <p>E_mail: </p>
   </div>
   <div id="cli">
     @foreach ($enrollments as $key => $student)
-    <p>Exmo.(s) Sr.(s): </p>
+    <p>Exmo. Sr.(a): </p>
     <b>{{ Strtoupper($student->student) }}</b>
     <p><label>Cell: {{ $student->ntelefone }}</label></p>
-    <p>{{ $student->type_payment }}: <label>Av/Rua: </label>
+    <p><label>Av/Rua: {{ $student->avenida }} </label>
     </p>
   </div>
 
-  <div id="limp">
-    <b><label>Data Doc <?php echo date("d-m-Y"); ?></label></b>
+  <div id="limp" style="text-align: right; border:none;">
+    <b><label>Data: <?php echo date("d-m-Y"); ?></label></b>
 
   </div>
   <div id="limpinf">
@@ -164,35 +167,31 @@
     <tbody>
       <tr>
         <td style="text-align: left;">{{$student->course}}</td>
-        <td style="text-align: left;">{{$student->price_enrollemnt}}</td>
-        <td style="text-align: left;">{{$student->price_subscrab}}</td>
+        <td style="text-align: left;">{{$student->price_enrollemnt}} Mts</td>
+        <td style="text-align: left;">{{$student->price_subscrab}} Mts</td>
         <td style="text-align: left;">
-          {{$student->price_enrollemnt}}</td>
+          {{$student->price_enrollemnt}} Mts</td>
       </tr>
     </tbody>
   </table>
   <table id="tab">
     <tfoot>
+
+
       <tr>
-        <th colspan="5" style="text-align: right; width: 111px;">TOTAL </th>
-        <th style="background-color:#A9D0F5; width: 111px;">
+        <th colspan="4" style="text-align: right; width: 111px;">TOTAL PAGO </th>
+        <th style="background-color:#A9D0F5; width: 81px;">
           <h4>
-            <?php echo `{{$student->price_enrollemnt}}`;?> </h4>
+            {{ $student->price_enrollemnt  + $student->price_subscrab }} Mts</h4>
         </th>
-      </tr>
 
-      <tr>
-        <th colspan="5" style="text-align: left; width: 111px;">TOTAL PAGO </th>
-        <th style="background-color:#A9D0F5; width: 111px;">
-
-        </th>
       </tr>
     </tfoot>
     @endforeach
   </table><br>
   <div style="text-align: center;">
     _____________________________________
-    <br>(Assinatura do Cliente)<br>Responsável:
+    <br>(Assinatura do responsvel)<br>Responsável:
     {{ Auth::user()->name }}
   </div>
 </body>
