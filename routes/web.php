@@ -9,8 +9,7 @@ use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\MonthlyPaymentController;
-use App\Policies\AdminPolicy;
-use App\Http\Controllers\EntityController;
+use App\Http\Controllers\ExpensesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,9 +42,9 @@ Route::get('/', function () {
         return view('auth.register');
         
     });
-    Route::resource('dashboard',DashboardController::class);
-    });
+});
 
+Route::resource('dashboard',DashboardController::class);
     Route::resource('teacher',TeacherController::class);
     Route::resource('Userdashboard',UserDashboardController::class);
     Route::resource('student', StudentController::class);
@@ -55,7 +54,7 @@ Route::get('/', function () {
     Route::resource('district', DistrictController::class);
     Route::resource('enrollment', EnrollmentController::class);
     Route::resource('monthlypayment', MonthlyPaymentController::class);
-    Route::resource('entity', EntityController::class);
+    Route::resource('expenses', ExpensesController::class);
     Route::get('student.pdf', [StudentController::class, 'PDFLimpo'])->name('students.pdf');
     Route::get('monthypayments.pdf', [MonthlyPaymentController::class, 'PDFLimpo'])->name('monthypayments.pdf');
     Route::get('enrollments.pdf', [EnrollmentController::class, 'PDFLimpo'])->name('enrollments.pdf');
@@ -65,9 +64,7 @@ Route::get('/', function () {
     Route::get('student.pdf/{parametro}', [StudentController::class, 'PDFUser'])->name('studentx.pdf');
     Route::get('teacher.pdf', [TeacherController::class, 'PDFLimpo'])->name('teacher.pdf');
     Route::get('teacher.pdf/{parametro}', [TeacherController::class, 'PDFUser'])->name('teacherx.pdf');
-    Route::middleware(['auth', 'can:accessAdmin,App\Policies\AdminPolicy'])->group(function () {
-});
-
+   
 
 
 Auth::routes();

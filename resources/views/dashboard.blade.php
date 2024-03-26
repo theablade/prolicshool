@@ -11,6 +11,12 @@
     max-width: 800px;
     margin: 20px auto;
   }
+
+
+  .actions {
+    display: flex;
+    justify-content: space-evenly;
+  }
   </style>
 </head>
 <h1>Admin Dashboard</h1>
@@ -200,6 +206,67 @@
       </div>
 
     </div>
+  </div>
+
+</div>
+<div>
+  <h6>Despesas recentes</h6>
+  <table id="students" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Tipo transação</th>
+        <th>Descrição</th>
+        <th>valor</th>
+        <th>Data</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($expenses as $expense)
+      <tr>
+        <td>{{ $expense->id }}</td>
+        <td>{{ $expense->tipo }}</td>
+        <td>{{$expense->transacao}}</td>
+        <td>{{ $expense->descricao }}</td>
+        <td>{{ $expense->valor }}</td>
+        <td>
+
+
+          {{ \Carbon\Carbon::parse($expense->data)->format('d-m-Y') }}</td>
+
+
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+
+
+  <div class="card-footer clearfix">
+    <ul class="pagination pagination-sm m-0 float-right">
+
+      @if ($expenses->onFirstPage())
+      <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+      @else
+      <li class="page-item"><a class="page-link" href="{{ $expenses->previousPageUrl() }}" rel="prev">&laquo;</a>
+      </li>
+      @endif
+
+
+      @for ($i = 1; $i <= $expenses->lastPage(); $i++)
+        <li class="page-item {{ $i == $expenses->currentPage() ? 'active' : '' }}"><a class="page-link"
+            href="{{ $expenses->url($i) }}">{{ $i }}</a></li>
+        @endfor
+
+
+        @if ($expenses->hasMorePages())
+        <li class="page-item"><a class="page-link" href="{{ $expenses->nextPageUrl() }}" rel="next">&raquo;</a>
+        </li>
+        @else
+        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        @endif
+    </ul>
   </div>
 </div>
 

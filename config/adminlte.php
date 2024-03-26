@@ -390,6 +390,23 @@ return [
                     'icon'    => 'far fa-money-bill-alt',
                     'active'  => ['monthlypayment', 'monthlypayment*', 'regex:@^content/[0-9]+$@']
                 ],
+                 [
+                    'text' => 'Despesas',
+                    'url'  => 'expenses',
+                    'icon'    => 'far fa-money-bill-alt',
+                    'active'  => ['expenses', 'expenses*', 'regex:@^content/[0-9]+$@'],
+                     'submenu' => [
+                     [
+                    'text' => 'Todas despesas',
+                    'url'  => 'expenses',
+                    'icon'    => 'fas fa-registered', 
+                                  
+                      ],  
+                
+                     
+
+                     ]
+                ],
             ],
         ]
         

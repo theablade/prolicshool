@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\MonthlyPayment;
 use App\Models\Enrollment;
+use App\Models\Expenses;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ use function Laravel\Prompts\select;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
         $mytime      = Carbon::now('Africa/Maputo');
@@ -21,6 +22,15 @@ class DashboardController extends Controller
         $ano = date('Y', strtotime($mytime));
         
 
+        $var = $request->searchresult;
+         $expenses = Expenses::where("tipo", "LIKE","%". $var ."%")
+         ->orWhere("transacao","LIKE","%". $var ."%")
+         ->orWhere("data","LIKE","%". $var ."%")
+            ->orderBy('data', 'desc')
+
+         ->paginate(2);
+
+  
    
 
         $monty = DB::table('monthly_payment')
@@ -78,7 +88,7 @@ class DashboardController extends Controller
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2', ));
+        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2','expenses' ));
     }
 
     

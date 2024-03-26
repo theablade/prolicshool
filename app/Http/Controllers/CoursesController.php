@@ -16,7 +16,7 @@ class CoursesController extends Controller
           return view("course.index", ['courses' => $courses, 'searchcurso'=> $var]);
 
           if ($courses ->isEmpty()) {
-            return view('teacher.index')->with('message', 'Nenhum resultado encontrado para: '.$var);
+            return view('course.index')->with('message', 'Nenhum resultado encontrado para: '.$var);
           }
     }
 
