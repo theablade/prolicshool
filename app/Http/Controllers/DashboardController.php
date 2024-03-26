@@ -23,14 +23,22 @@ class DashboardController extends Controller
         
 
         $var = $request->searchresult;
-         $expenses = Expenses::where("tipo", "LIKE","%". $var ."%")
-         ->orWhere("transacao","LIKE","%". $var ."%")
-         ->orWhere("data","LIKE","%". $var ."%")
-            ->orderBy('data', 'desc')
+    
 
-         ->paginate(2);
+                $expenses = Expenses::where("tipo", "LIKE", "%" . $var . "%")
+                    ->orWhere("transacao", "LIKE", "%" . $var . "%")
+                    ->orWhere("data", "LIKE", "%" . $var . "%")
+                    ->orderBy('data', 'desc')
+                    ->paginate(2);
 
-  
+
+            $totalExpenses = DB::table('expenses')
+            ->select(DB::raw('sum(valor) as total'))
+            ->whereYear('data', $ano)
+            ->first();
+          
+         
+           
    
 
         $monty = DB::table('monthly_payment')
@@ -39,15 +47,24 @@ class DashboardController extends Controller
         ->where('payment_status', 'Pago')
           ->groupBy(DB::raw('Month(payment_date)'))
         ->orderBy('meses', 'ASC')
-         ->get();
+        ->get();
+        
+           $Totalmonty = DB::table('monthly_payment')
+            ->select(DB::raw('sum(price_enrollemnt) as total'))
+            ->whereYear('payment_date', $ano)
+            ->where('payment_status', 'Pago')
+            ->first();
 
-
-          $year = DB::table('monthly_payment')
-         ->select(DB::raw('sum(price_enrollemnt) as total'),  DB::raw('count(id) as qtyears'), DB::raw('Year(payment_date) as years'))
-        ->where('payment_status', 'Pago')
-          ->groupBy(DB::raw('Year(payment_date)'))
-        ->orderBy('years', 'DESC')
-         ->get();
+            
+  
+     
+        
+        $year = DB::table('monthly_payment')
+       ->select(DB::raw('sum(price_enrollemnt) as total'),  DB::raw('count(id) as qtyears'), DB::raw('Year(payment_date) as years'))
+      ->where('payment_status', 'Pago')
+        ->groupBy(DB::raw('Year(payment_date)'))
+      ->orderBy('years', 'DESC')
+       ->get();
      
           $year2 = DB::table('enrollment')
          ->select(DB::raw('sum(price_subscrab) as total'),  DB::raw('count(id) as qtyears'), DB::raw('Year(enrollment_date) as years'))
@@ -57,7 +74,7 @@ class DashboardController extends Controller
         ->orderBy('years', 'DESC')
          ->get();
      
-      
+
         $yearsenrollment = DB::table('monthly_payment')
         ->select(DB::raw('sum(price_enrollemnt) as total'))
         ->whereYear('payment_date', $ano)
@@ -88,7 +105,17 @@ class DashboardController extends Controller
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2','expenses' ));
+        $totalAmount = $Totalmonty->total + $montlyEnrollment->total + $yearEnrollment->total;
+        $totalExpenses = $totalExpenses->total;
+       
+        if($totalExpenses !=0){
+          $totalPerda = $totalAmount- $totalExpenses;
+        }else if($totalExpenses == 0){
+          $totalPerda = 0;
+        }
+
+    
+        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2','expenses', 'totalAmount', 'totalPerda'));
     }
 
     

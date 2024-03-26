@@ -24,7 +24,8 @@
 
 @section('content')
 <div class="row">
-  <div class="col-lg-3 col-6">
+  <div class="col-lg-4 h-100 col-6">
+
     <div class="small-box bg-info">
       <div class="inner">
         <h3>{{ number_format($yearsenrollment->total, 2, ',', '.') }}Mts</h3>
@@ -38,7 +39,7 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-6">
+  <div class="col-lg-4 col-6">
     <div class="small-box bg-success">
       <div class="inner">
 
@@ -54,7 +55,7 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-6">
+  <div class="col-lg-4 col-6">
 
     <div class="small-box bg-warning">
       <div class="inner">
@@ -68,7 +69,7 @@
     </div>
   </div>
 
-  <div class="col-lg-3 col-6">
+  <div class="col-lg-4 col-6">
 
     <div class="small-box bg-danger">
       <div class="inner">
@@ -77,13 +78,40 @@
         <p>Matriculas Mês</p>
       </div>
       <div class="icon">
-        <i class="ion ion-pie-graph"></i>
+        <i class="fas fa-file-text"></i>
       </div>
       <a href="enrollment" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
 
+  <div class="col-lg-4 col-6">
 
+    <div class="small-box bg-success">
+      <div class="inner">
+        <h3>{{ number_format($totalAmount, 2, ',', '.') }}Mts</h3>
+
+        <p>Total Ganho</p>
+      </div>
+      <div class="icon">
+        <i class="	fas fa-chart-line"></i>
+      </div>
+      <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+  <div class="col-lg-4 col-6">
+
+    <div class="small-box bg-danger">
+      <div class="inner">
+        <h3>{{ number_format($totalPerda, 2, ',', '.') }}Mts</h3>
+
+        <p>Total Gasto</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-chart-pie"></i>
+      </div>
+      <a href="expenses" class="small-box-footer">Mais info <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
 </div>
 
 <div class="row">
@@ -529,6 +557,10 @@ const myline = new Chart(bar, {
   }
 });
 
+window.addEventListener('resize', function() {
+  myline.resize();
+});
+
 const bar2 = document.getElementById('myChart2').getContext('2d');
 
 const myline2 = new Chart(bar2, {
@@ -561,6 +593,10 @@ const myline2 = new Chart(bar2, {
       }
     }
   }
+});
+
+window.addEventListener('resize', function() {
+  myline2.resize();
 });
 </script>
 @stop
