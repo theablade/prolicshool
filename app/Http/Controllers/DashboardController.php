@@ -49,7 +49,7 @@ class DashboardController extends Controller
         ->orderBy('meses', 'ASC')
         ->get();
         
-           $Totalmonty = DB::table('monthly_payment')
+           $TotalAnual = DB::table('monthly_payment')
             ->select(DB::raw('sum(price_enrollemnt) as total'))
             ->whereYear('payment_date', $ano)
             ->where('payment_status', 'Pago')
@@ -105,17 +105,13 @@ class DashboardController extends Controller
         ->whereMonth('enrollment_date', $mes)
         ->first();
 
-        $totalAmount = $Totalmonty->total + $montlyEnrollment->total + $yearEnrollment->total;
         $totalExpenses = $totalExpenses->total;
+        $totalAmount = ($TotalAnual->total  + $yearEnrollment->total) -$totalExpenses ;
        
-        if($totalExpenses !=0){
-          $totalPerda = $totalAmount- $totalExpenses;
-        }else if($totalExpenses == 0){
-          $totalPerda = 0;
-        }
+     
 
     
-        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2','expenses', 'totalAmount', 'totalPerda'));
+        return view('dashboard', compact('montlyenrollment', 'yearsenrollment', 'yearEnrollment','montlyEnrollment', 'monty', 'monty2', 'year', 'year2','expenses', 'totalAmount', 'totalExpenses'));
     }
 
     

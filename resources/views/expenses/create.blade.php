@@ -38,11 +38,11 @@
               <label for="tipo">Tipo</label>
               <select class="form-control" id="tipo" name="tipo" required>
                 <option value="">Selecione o tipo de despesa</option>
-                <option value="materiais">Materiais</option>
-                <option value="pagamento professores">Pagamento de Professores</option>
-                <option value="agua">Pagamento de Água</option>
-                <option value="energia">Pagamento de Energia</option>
-                <option value="aluguel">Pagamento de Aluguel</option>
+                <option value="Materiais">Materiais</option>
+                <option value="Pagamento professores">Pagamento de Professores</option>
+                <option value="Agua">Pagamento de Água</option>
+                <option value="Energia">Pagamento de Energia</option>
+                <option value="Aluguel">Pagamento de Aluguel</option>
               </select>
             </div>
 

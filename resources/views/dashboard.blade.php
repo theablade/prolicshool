@@ -24,9 +24,9 @@
 
 @section('content')
 <div class="row">
-  <div class="col-lg-4 h-100 col-6">
+  <div class="col-lg-2 h-100 col-6">
 
-    <div class="small-box bg-info">
+    <div class="small-box bg-gradient-info">
       <div class="inner">
         <h3>{{ number_format($yearsenrollment->total, 2, ',', '.') }}Mts</h3>
 
@@ -39,8 +39,8 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-6">
-    <div class="small-box bg-success">
+  <div class="col-lg-2 col-6">
+    <div class="small-box bg-gradient-success">
       <div class="inner">
 
 
@@ -55,9 +55,9 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-6">
+  <div class="col-lg-2 col-6">
 
-    <div class="small-box bg-warning">
+    <div class="small-box bg-gradient-warning">
       <div class="inner">
         <h3>{{ number_format($yearEnrollment->total, 2, ',', '.') }}Mts</h3>
         <p>Matriculas Ano</p>
@@ -69,9 +69,9 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-6">
+  <div class="col-lg-2 col-6">
 
-    <div class="small-box bg-danger">
+    <div class="small-box bg-gradient-primary mb-3">
       <div class="inner">
         <h3>{{ number_format($montlyEnrollment->total, 2, ',', '.') }}Mts</h3>
 
@@ -84,13 +84,13 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-6">
+  <div class="col-lg-2 col-6">
 
     <div class="small-box bg-success">
       <div class="inner">
         <h3>{{ number_format($totalAmount, 2, ',', '.') }}Mts</h3>
 
-        <p>Total Ganho</p>
+        <p>Total ganho ano</p>
       </div>
       <div class="icon">
         <i class="	fas fa-chart-line"></i>
@@ -98,13 +98,13 @@
       <a href="#" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
-  <div class="col-lg-4 col-6">
+  <div class="col-lg-2 col-6">
 
     <div class="small-box bg-danger">
       <div class="inner">
-        <h3>{{ number_format($totalPerda, 2, ',', '.') }}Mts</h3>
+        <h3>{{ number_format($totalExpenses, 2, ',', '.') }}Mts</h3>
 
-        <p>Total Gasto</p>
+        <p>Total gasto ano</p>
       </div>
       <div class="icon">
         <i class="fas fa-chart-pie"></i>

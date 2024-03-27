@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
@@ -33,15 +35,18 @@ Route::get('/', function () {
 
 
 
+Route::get('/resgistro', function () {
+       
+       return view('auth.register');
+       
+   })->can('accessAdmin');
+
+
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
     Route::middleware(['can:access'])->group(function (){
 
 
- Route::get('/resgistro', function () {
-        
-        return view('auth.register');
-        
-    });
 });
 
 Route::resource('dashboard',DashboardController::class);

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-             $table->string('role')->default('User');
+           $table->string('role');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
@@ -30,6 +30,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+          Schema::table('users', function (Blueprint $table) {
+        $table->dropColumn('role');
+    });
         Schema::dropIfExists('users');
     }
 };

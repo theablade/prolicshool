@@ -38,13 +38,13 @@
               <label for="tipo">Tipo</label>
               <select class="form-control" id="tipo" name="tipo" required>
                 <option value="">Selecione o tipo de despesa</option>
-                <option value="materiais" {{ $expense->tipo === 'materiais' ? 'selected' : '' }}>Materiais</option>
-                <option value="pagamento professores"
-                  {{ $expense->tipo === 'pagamento professores' ? 'selected' : '' }}>Pagamento de Professores</option>
-                <option value="agua" {{ $expense->tipo === 'agua' ? 'selected' : '' }}>Pagamento de Água</option>
-                <option value="energia" {{ $expense->tipo === 'energia' ? 'selected' : '' }}>Pagamento de Energia
+                <option value="Materiais" {{ $expense->tipo === 'Materiais' ? 'selected' : '' }}>Materiais</option>
+                <option value="Pagamento professores"
+                  {{ $expense->tipo === 'Pagamento professores' ? 'selected' : '' }}>Pagamento de Professores</option>
+                <option value="Agua" {{ $expense->tipo === 'Agua' ? 'selected' : '' }}>Pagamento de Água</option>
+                <option value="Energia" {{ $expense->tipo === 'Energia' ? 'selected' : '' }}>Pagamento de Energia
                 </option>
-                <option value="aluguel" {{ $expense->tipo === 'aluguel' ? 'selected' : '' }}>Pagamento de Aluguel
+                <option value="Aluguel" {{ $expense->tipo === 'Aluguel' ? 'selected' : '' }}>Pagamento de Aluguel
                 </option>
               </select>
             </div>

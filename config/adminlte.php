@@ -331,7 +331,6 @@ return [
                 [
                     'text' => 'Usuario',
                     'url'  => 'resgistro',
-                        'can'=>'access',
                     'icon'    => 'fas fa-fw fa-user',
                     'active'  => ['usuario', 'usuario*', 'regex:@^content/[0-9]+$@']
                 ],
