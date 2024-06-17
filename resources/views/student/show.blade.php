@@ -55,7 +55,7 @@
 
         <div class="row imgs">
           <div class="img" style="display: flex; justify-content: center; align-items: center;">
-            <img id="preview" src="{{ old('img') ? asset(old('img')) : asset('storage/img/'.$student->img) }}"
+            <img id="preview" src="{{ asset('storage/img/' . $student->img) }}"
               class="img-fluid img-thumbnail preview-image" onclick="openPopup(this.src);">
             <div class="info">
 

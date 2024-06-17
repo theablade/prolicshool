@@ -49,7 +49,7 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 });
 
-Route::resource('dashboard',DashboardController::class);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
     Route::resource('teacher',TeacherController::class);
     Route::resource('Userdashboard',UserDashboardController::class);
     Route::resource('student', StudentController::class);

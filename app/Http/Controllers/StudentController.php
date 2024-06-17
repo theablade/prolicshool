@@ -72,15 +72,18 @@ class StudentController extends Controller
       
 
 
-        $student = Student::findOrFail($id);
+        $student = Student::find($id);
 
         $province = DB::table('provinces')
         ->where('province_id','=',$student->provincia )
         ->first();
+  
+   
         
-      $district = DB::table('districts')
+        $district = DB::table('districts')
         ->where('id','=',$student->distrito )
         ->first();
+
 
 
         
@@ -98,23 +101,43 @@ class StudentController extends Controller
 
     
     public function update(Request $request, $id)
-    {
-         $student = Student::findOrFail($id);
+{
+    $student = Student::findOrFail($id);
 
-
+    // Atualizar a imagem, se uma nova imagem foi enviada
     if ($request->hasFile('img')) {
-    
         $path = $request->file('img')->store('public/images');
         $student->img_path = $path;
     }
 
-    $student->update($request->except('img'));
+    // Obter o valor selecionado da província
+    $provinciaSelect = $request->input('provincia');
+    $student->provincia = $provinciaSelect;
 
-    
+    // Verificar se a província selecionada existe no banco de dados
+    $province = DB::table('provinces')->where('nome', $provinciaSelect)->first();
 
-        return redirect()->route("student.index")
-                         ->with("msg","Estudante atualizado com sucesso");
+    if ($province) {
+        // Atualizar o campo 'provincia' do estudante com o ID da província
+        $student->provincia = $province->province_id;
     }
+
+   $distritoSelect = $request->input('distrito');
+    $student->distrito = $distritoSelect;
+
+    // Verificar se o distrito selecionado existe no banco de dados
+    $district = DB::table('districts')->where('nome', $distritoSelect)->first();
+
+    if ($district) {
+        // Atualizar o campo 'distrito' do estudante com o ID do distrito
+        $student->distrito = $district->id;
+    }
+
+    // Atualizar outros campos do estudante, exceto 'img', 'provincia' e 'distrito'
+    $student->update($request->except('img', 'provincia', 'distrito'));
+
+    return redirect()->route("student.index")->with("msg", "Estudante atualizado com sucesso");
+}
 
    
     public function destroy($id)
